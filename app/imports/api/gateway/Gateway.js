@@ -24,4 +24,4 @@ class GatewaysCollection {
   }
 }
 
-export const Courses = new GatewaysCollection();
+export const Gateways = new GatewaysCollection();
