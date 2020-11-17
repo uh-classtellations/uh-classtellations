@@ -16,8 +16,19 @@ class Landing extends React.Component {
             <Header as='h1' inverted>USE THE STARS TO GUIDE YOUR FUTURE</Header>
             <Header as='p' inverted>PLAN YOUR SUCCESS AT UH MANOA</Header>
           </Grid.Column>
-
         </Grid>
+
+            <Grid columns={5}>
+            <Grid.Row>
+                <Grid.Column>
+                </Grid.Column>
+                <Grid.Column>
+                    <Header as='h2' textAlign='left' inverted >CLASSTELLATION noun</Header>
+                    <Header as='h3' textAlign='left' inverted>klah-stel-la-tion</Header>
+                    <Header as='p' floated='center' inverted>1: Configuration of stars, which is used to guide and plan you through your academic journey at University of Hawpaii</Header>
+                </Grid.Column>
+            </Grid.Row>
+            </Grid>
         </div>
     );
   }
