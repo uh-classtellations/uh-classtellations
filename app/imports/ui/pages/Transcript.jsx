@@ -18,8 +18,9 @@ class Transcript extends React.Component {
   /** Render the page once subscriptions have been received. */
   renderPage() {
     return (
+        <div className="landing-background">
         <Container>
-          <Header as="h2" textAlign="center">Transcript</Header>
+          <Header as="h2" textAlign="center" inverted>Transcript</Header>
           <Table celled>
             <Table.Header>
               <Table.Row>
@@ -38,6 +39,7 @@ class Transcript extends React.Component {
           </Table>
           <AddCourse/>
         </Container>
+        </div>
     );
   }
 }
