@@ -1,22 +1,23 @@
 import React from 'react';
-import Sortable from "sortablejs";
-import { Sortable, MultiDrag, Swap, OnSpill, AutoScroll } from "sortablejs";
+// import Sortable from "sortablejs";
+import { Header } from 'semantic-ui-react';
+// import { Sortable, MultiDrag, Swap, OnSpill, AutoScroll } from "sortablejs";
 
-var el = document.getElementById("items");
-var sortable = Sortable.create(el);
+// var el = document.getElementById("items");
+// var sortable = Sortable.create(el);
 
 /** A simple static component to render some text for the landing page. */
-class Landing extends React.Component {
+class Progress extends React.Component {
 
   render() {
     return (
-        <ul id="items">
-          <li>item 1</li>
-          <li>item 2</li>
-          <li>item 3</li>
-        </ul>
+        <div className="landing-background">
+          <Header as='h1' textAlign='center' inverted>
+            This page is currently under development. Check back soon!
+          </Header>
+        </div>
     );
   }
 }
 
-export default Landing;
+export default Progress;
