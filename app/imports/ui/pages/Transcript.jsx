@@ -20,7 +20,7 @@ class Transcript extends React.Component {
     return (
         <div className="landing-background">
         <Container>
-          <Header as="h2" textAlign="center" inverted>Transcript</Header>
+          <Header as="h1" textAlign="center" inverted>Transcript</Header>
           <Table celled>
             <Table.Header>
               <Table.Row>
