@@ -4,7 +4,7 @@ import { Container, Table, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Courses } from '../../api/course/Course';
-import CourseItem from '../components/Course';
+import CourseItem from '../components/CourseItem';
 import AddCourse from '../components/AddCourse';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */

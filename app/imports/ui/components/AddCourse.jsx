@@ -9,11 +9,31 @@ import { Courses } from '../../api/course/Course';
 
 /** Create a schema to specify the structure of the data to appear in the form. */
 const formSchema = new SimpleSchema({
-  semester: String,
-  name: String,
-  credits: Number,
-  status: String,
-  grade: String,
+  semester: {
+    type: String,
+    allowedValues: ['Spring 2018', 'Fall 2018', 'Spring 2019', 'Fall 2019', 'Spring 2020', 'Fall 2020'],
+    defaultValue: 'Fall 2020',
+  },
+  name: {
+    type: String,
+    allowedValues: ['ICS 111', 'ICS 141', 'ICS 211', 'ICS 212', 'ICS 241', 'ICS 311', 'ICS 314', 'ICS 321'],
+    defaultValue: 'ICS 111',
+  },
+  credits: {
+    type: Number,
+    allowedValues: [1, 2, 3, 4],
+    defaultValue: '3',
+  },
+  status: {
+    type: String,
+    allowedValues: ['In Progress', 'Complete', 'Withdrew'],
+    defaultValue: 'In Progress',
+  },
+  grade: {
+    type: String,
+    allowedValues: ['TBD', 'A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F', 'W'],
+    defaultValue: 'TBD',
+  },
   // prerequisites: [],
 });
 
