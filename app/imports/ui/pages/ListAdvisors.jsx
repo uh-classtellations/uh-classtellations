@@ -34,12 +34,14 @@ class ListAdvisors extends React.Component {
   /** Render the page once subscriptions have been received. */
   renderPage() {
     return (
-        <Container>
-          <Header as="h2" textAlign="center" inverted>ICS Advisors</Header>
-          <Card.Group>
-            {this.advisors.map((advisor, index) => <Advisor key={index} advisor={advisor} />)}
-          </Card.Group>
-        </Container>
+        <div className="landing-background">
+          <Container>
+            <Header as="h2" textAlign="center" inverted>ICS Advisors</Header>
+            <Card.Group>
+              {this.advisors.map((advisor, index) => <Advisor key={index} advisor={advisor}/>)}
+            </Card.Group>
+          </Container>
+        </div>
     );
   }
 }
