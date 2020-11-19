@@ -39,7 +39,7 @@ class Signup extends React.Component {
       return <Redirect to={from}/>;
     }
     return (
-        <div className="classtellations-landing-background">
+        <div className="landing-background">
       <Container id="signup-page">
         <Grid textAlign="center" verticalAlign="middle" centered columns={2}>
           <Grid.Column>
