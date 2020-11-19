@@ -12,6 +12,7 @@ import ListStuffAdmin from '../pages/ListStuffAdmin';
 import Transcript from '../pages/Transcript';
 import EditStuff from '../pages/EditStuff';
 import NotFound from '../pages/NotFound';
+import Progress from '../pages/Progress';
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
@@ -28,6 +29,7 @@ class App extends React.Component {
               <Route path="/signin" component={Signin}/>
               <Route path="/signup" component={Signup}/>
               <ProtectedRoute path="/transcript" component={Transcript}/>
+              <ProtectedRoute path="/progress" component={Progress}/>
               <ProtectedRoute path="/list-advisors" component={ListAdvisors}/>
               <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
               <AdminProtectedRoute path="/admin" component={ListStuffAdmin}/>
