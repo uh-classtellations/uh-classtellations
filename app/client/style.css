@@ -1,12 +1,13 @@
 .landing-background {
     height: 900px;
-    background: url('images/Stargazer.jpg') no-repeat center center fixed;
+    background: url('images/stargazer.jpg') no-repeat center center fixed;
     background-size:cover;
     padding-top: 20px;
 }
 
-
-h2 {
-    margin: 20px;
-    padding-top: 400px;
+.external-link {
+  color: lawngreen;
+}
+.external-link:hover {
+  color: orange;
 }

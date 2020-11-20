@@ -25,8 +25,21 @@ class Landing extends React.Component {
               <Grid.Column>
                 <Header as='h2' textAlign='left' inverted>CLASSTELLATION noun</Header>
                 <Header as='h3' textAlign='left' inverted>klas-tuh-lei-shun</Header>
-                <Header as='p' floated='center' inverted>1: A configuration of stars, representing your courses, used to
-                  help guide you on your academic journey at the University of Hawaii at Manoa</Header>
+                <Header as='h4' floated='center' inverted>
+                  1: A configuration of stars, representing your courses, used to help guide you on your academic
+                  journey at the University of Hawaii at Manoa.
+                </Header>
+                <Header as='h2' textAlign='center' inverted>
+                  UH Classtellations uses a semester-by-semester flowchart view of your ICS major classes- past,
+                  present, and future, as a visual aid to help you plan ahead.
+                </Header>
+                <Header as='h2' textAlign='center' inverted>
+                  Showing prerequisites with arrows, you can experiment class combinations and timing to build your
+                  optimal path toward graduation.
+                </Header>
+                <Header as='h5' textAlign='center' inverted>
+                  For more information, check out <a className='external-link' href='https://uh-classtellations.github.io/'>our Github Project Page.</a>
+                </Header>
               </Grid.Column>
             </Grid.Row>
           </Grid>

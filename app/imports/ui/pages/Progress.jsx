@@ -13,7 +13,10 @@ class Progress extends React.Component {
     return (
         <div className="landing-background">
           <Header as='h1' textAlign='center' inverted>
-            This page is currently under development. Check back soon!
+            This page is currently under development.
+          </Header>
+          <Header as='h2' textAlign='center' inverted>
+            It will utilize SortableJS with the intent to resemble the mockup on <a className='external-link' href='https://uh-classtellations.github.io/'>our Github Project Page.</a>
           </Header>
         </div>
     );
