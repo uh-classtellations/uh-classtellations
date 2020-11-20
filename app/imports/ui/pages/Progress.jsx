@@ -16,7 +16,7 @@ class Progress extends React.Component {
             This page is currently under development.
           </Header>
           <Header as='h2' textAlign='center' inverted>
-            It will utilize SortableJS with the intent to resemble the mockup on <a className='external-link' href='https://uh-classtellations.github.io/'>our Github Project Page.</a>
+            It will utilize SortableJS with the intent to resemble the mockup on <a className='external-link' href='https://uh-classtellations.github.io/'>our Home Page.</a>
           </Header>
         </div>
     );

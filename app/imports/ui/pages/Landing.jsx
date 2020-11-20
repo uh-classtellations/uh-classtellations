@@ -38,7 +38,7 @@ class Landing extends React.Component {
                   optimal path toward graduation.
                 </Header>
                 <Header as='h5' textAlign='center' inverted>
-                  For more information, check out <a className='external-link' href='https://uh-classtellations.github.io/'>our Github Project Page.</a>
+                  For more information, check out <a className='external-link' href='https://uh-classtellations.github.io/'>our Home Page.</a>
                 </Header>
               </Grid.Column>
             </Grid.Row>
