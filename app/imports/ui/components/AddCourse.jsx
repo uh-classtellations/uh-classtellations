@@ -11,8 +11,8 @@ import { Courses } from '../../api/course/Course';
 const formSchema = new SimpleSchema({
   semester: {
     type: String,
-    allowedValues: ['2018 Spring', '2018 Fall', '2019 Spring', '2019 Fall', '2020 Spring', '2020 Fall'],
-    defaultValue: '2020 Fall',
+    allowedValues: ['Spring 2018', 'Fall 2018', 'Spring 2019', 'Fall 2019', 'Spring 2020', 'Fall 2020'],
+    defaultValue: 'Fall 2020',
   },
   name: {
     type: String,
