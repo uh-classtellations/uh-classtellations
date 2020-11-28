@@ -5,6 +5,11 @@ import { withRouter, Link } from 'react-router-dom';
 
 /** Renders a single row in Transcript table. See pages/Transcript.jsx. */
 class CourseItem extends React.Component {
+  removeItem(docID) {
+    console.log(`item to delete is ${docID}`);
+    this.props.Courses.collection.remove(docID);
+  }
+
   render() {
     return (
         <Table.Row>
@@ -29,6 +34,7 @@ class CourseItem extends React.Component {
 /** Require a document to be passed to this component. */
 CourseItem.propTypes = {
   course: PropTypes.object.isRequired,
+  Courses: PropTypes.object.isRequired,
 };
 
 /** Wrap this component in withRouter since we use the <Link> React Router element. */

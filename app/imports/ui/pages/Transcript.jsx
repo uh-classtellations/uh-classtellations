@@ -34,7 +34,7 @@ class Transcript extends React.Component {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {this.props.courses.map((course) => <CourseItem key={course._id} course={course} />)}
+              {this.props.courses.map((course) => <CourseItem key={course._id} course={course} Courses={Courses}/>)}
             </Table.Body>
           </Table>
           <AddCourse/>
