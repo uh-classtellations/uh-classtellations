@@ -1,6 +1,7 @@
 import React from 'react';
+import _ from 'lodash';
 import { Meteor } from 'meteor/meteor';
-import { Container, Table, Header, Loader, Button, Icon } from 'semantic-ui-react';
+import { Container, Table, Header, Loader, Button } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Courses } from '../../api/course/Course';
@@ -10,6 +11,28 @@ import AddCourse from '../components/AddCourse';
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class Transcript extends React.Component {
 
+  exampleReducer(state, action) {
+    switch (action.type) {
+      case 'CHANGE_SORT':
+        if (state.column === action.column) {
+          return {
+            ...state,
+            data: state.data.reverse(),
+            direction:
+                state.direction === 'ascending' ? 'descending' : 'ascending',
+          };
+        }
+
+        return {
+          column: action.column,
+          data: _.sortBy(state.data, [action.column]),
+          direction: 'ascending',
+        };
+      default:
+        throw new Error();
+    }
+  }
+
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
@@ -17,6 +40,13 @@ class Transcript extends React.Component {
 
   /** Render the page once subscriptions have been received. */
   renderPage() {
+    const [state, dispatch] = React.useReducer(this.exampleReducer(), {
+      column: null,
+      data: this.props.courses,
+      direction: null,
+    });
+    const { column, data, direction } = state;
+
     return (
         <div className="landing-background">
         <Container>
@@ -26,10 +56,13 @@ class Transcript extends React.Component {
               Add Course
             </Button>
           </Header>
-          <Table celled>
+          <Table sortable celled>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell>Semester</Table.HeaderCell>
+                <Table.HeaderCell
+                    sorted={column === 'semester' ? direction : null}
+                    onClick={() => dispatch({ type: 'CHANGE_SORT', column: 'semester' })}
+                >Semester</Table.HeaderCell>
                 <Table.HeaderCell>Course</Table.HeaderCell>
                 <Table.HeaderCell>Credits</Table.HeaderCell>
                 <Table.HeaderCell>Status</Table.HeaderCell>
@@ -38,7 +71,7 @@ class Transcript extends React.Component {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {this.props.courses.map((course) => <CourseItem key={course._id} course={course} Courses={Courses}/>)}
+              {data.map((course) => <CourseItem key={course._id} course={course} Courses={Courses}/>)}
             </Table.Body>
           </Table>
           <AddCourse/>
