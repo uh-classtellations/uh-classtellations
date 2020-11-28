@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Table, Header, Loader } from 'semantic-ui-react';
+import { Container, Table, Header, Loader, Button, Icon } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Courses } from '../../api/course/Course';
@@ -20,7 +20,12 @@ class Transcript extends React.Component {
     return (
         <div className="landing-background">
         <Container>
-          <Header as="h1" textAlign="center" inverted>Transcript</Header>
+          <Header as="h1" textAlign="center" inverted>
+            Transcript
+            <Button floated='right'>
+              Add Course
+            </Button>
+          </Header>
           <Table celled>
             <Table.Header>
               <Table.Row>
@@ -29,7 +34,6 @@ class Transcript extends React.Component {
                 <Table.HeaderCell>Credits</Table.HeaderCell>
                 <Table.HeaderCell>Status</Table.HeaderCell>
                 <Table.HeaderCell>Grade</Table.HeaderCell>
-                <Table.HeaderCell>Edit</Table.HeaderCell>
                 <Table.HeaderCell>Delete</Table.HeaderCell>
               </Table.Row>
             </Table.Header>

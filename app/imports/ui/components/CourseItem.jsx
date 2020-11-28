@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Icon, Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 /** Renders a single row in Transcript table. See pages/Transcript.jsx. */
 class CourseItem extends React.Component {
@@ -18,9 +18,6 @@ class CourseItem extends React.Component {
           <Table.Cell>{this.props.course.credits}</Table.Cell>
           <Table.Cell>{this.props.course.status}</Table.Cell>
           <Table.Cell>{this.props.course.grade}</Table.Cell>
-          <Table.Cell>
-            <Link to={`/edit/${this.props.course._id}`}>Edit</Link>
-          </Table.Cell>
           <Table.Cell>
             <Button icon onClick={() => this.removeItem(this.props.course._id)}>
               <Icon name='trash'/>
