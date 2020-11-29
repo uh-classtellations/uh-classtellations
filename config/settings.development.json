@@ -4,7 +4,11 @@
     { "email": "john@foo.com", "password": "changeme" },
     { "email": "jane@foo.com", "password": "changeme" },
     { "email": "jeff@foo.com", "password": "changeme" },
-    { "email": "julie@foo.com", "password": "changeme" }
+    { "email": "julie@foo.com", "password": "changeme" },
+    { "email": "jimmy@foo.com", "password": "changeme" },
+    { "email": "cathy@foo.com", "password": "changeme" },
+    { "email": "conrad@foo.com", "password": "changeme" },
+    { "email": "susan@foo.com", "password": "changeme" }
   ],
 
   "defaultData": [
@@ -12,5 +16,7 @@
     { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
     { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
     { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
-  ]
+  ],
+
+  "loadAssetsFile":  true
 }
