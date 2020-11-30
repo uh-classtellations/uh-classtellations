@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Segment, Header } from 'semantic-ui-react';
+import { Grid, Segment, Header, Button } from 'semantic-ui-react';
 import { AutoForm, ErrorsField, SelectField, SubmitField } from 'uniforms-semantic';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
@@ -61,9 +61,14 @@ class AddCourse extends React.Component {
   render() {
     let fRef = null;
     return (
-        <Grid container centered>
+        <Grid container centered id="AddCourse">
           <Grid.Column>
-            <Header as="h2" textAlign="center" inverted>Add Course</Header>
+            <Header as="h2" textAlign="center" inverted>
+              Add Course
+                <Button floated='right' as='a' href="#transcript">
+                  Return to Top
+                </Button>
+            </Header>
             <AutoForm ref={ref => {
               fRef = ref;
             }} schema={bridge} onSubmit={data => this.submit(data, fRef)}>

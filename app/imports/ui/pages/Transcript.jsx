@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Meteor } from 'meteor/meteor';
 import { Container, Table, Header, Loader, Button } from 'semantic-ui-react';
+import { HashLink } from 'react-router-hash-link';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Courses } from '../../api/course/Course';
@@ -24,30 +25,32 @@ class Transcript extends React.Component {
   renderPage() {
     return (
         <div className="landing-background">
-        <Container>
-          <Header as="h1" textAlign="center" inverted>
-            Transcript
-            <Button floated='right'>
-              Add Course
-            </Button>
-          </Header>
-          <Table sortable celled>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>Semester</Table.HeaderCell>
-                <Table.HeaderCell>Course</Table.HeaderCell>
-                <Table.HeaderCell>Credits</Table.HeaderCell>
-                <Table.HeaderCell>Status</Table.HeaderCell>
-                <Table.HeaderCell>Grade</Table.HeaderCell>
-                <Table.HeaderCell>Delete</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {this.coursesSorted.map((course) => <CourseItem key={course._id} course={course} Courses={Courses}/>)}
-            </Table.Body>
-          </Table>
-          <AddCourse/>
-        </Container>
+          <Container id="transcript">
+            <Header as="h1" textAlign="center" inverted>
+              Transcript
+              <HashLink to="/transcript#AddCourse">
+              <Button floated='right'>
+                Add Course
+              </Button>
+              </HashLink>
+            </Header>
+            <Table sortable celled id="transcript-table">
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell>Semester</Table.HeaderCell>
+                  <Table.HeaderCell>Course</Table.HeaderCell>
+                  <Table.HeaderCell>Credits</Table.HeaderCell>
+                  <Table.HeaderCell>Status</Table.HeaderCell>
+                  <Table.HeaderCell>Grade</Table.HeaderCell>
+                  <Table.HeaderCell>Delete</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {this.coursesSorted.map((course) => <CourseItem key={course._id} course={course} Courses={Courses}/>)}
+              </Table.Body>
+            </Table>
+            <AddCourse/>
+          </Container>
         </div>
     );
   }
