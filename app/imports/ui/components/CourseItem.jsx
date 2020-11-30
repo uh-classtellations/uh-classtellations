@@ -5,6 +5,13 @@ import { withRouter } from 'react-router-dom';
 
 /** Renders a single row in Transcript table. See pages/Transcript.jsx. */
 class CourseItem extends React.Component {
+
+  progressColors(status) {
+    if (status === 'Complete') {
+      return 'positive';
+    } return status === 'In Progress' ? 'warning' : 'negative';
+  }
+
   removeItem(docID) {
     console.log(`item to delete is ${docID}`);
     this.props.Courses.collection.remove(docID);
@@ -12,7 +19,7 @@ class CourseItem extends React.Component {
 
   render() {
     return (
-        <Table.Row>
+        <Table.Row className={this.progressColors(this.props.course.status)}>
           <Table.Cell>{this.props.course.semester}</Table.Cell>
           <Table.Cell>{this.props.course.name}</Table.Cell>
           <Table.Cell>{this.props.course.credits}</Table.Cell>
