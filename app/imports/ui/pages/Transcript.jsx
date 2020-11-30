@@ -11,42 +11,17 @@ import AddCourse from '../components/AddCourse';
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class Transcript extends React.Component {
 
-  exampleReducer(state, action) {
-    switch (action.type) {
-      case 'CHANGE_SORT':
-        if (state.column === action.column) {
-          return {
-            ...state,
-            data: state.data.reverse(),
-            direction:
-                state.direction === 'ascending' ? 'descending' : 'ascending',
-          };
-        }
+  coursesSorted = [];
 
-        return {
-          column: action.column,
-          data: _.sortBy(state.data, [action.column]),
-          direction: 'ascending',
-        };
-      default:
-        throw new Error();
-    }
-  }
-
-  /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
+  /** If the subscription(s) have been received, sort collection, and render the page, otherwise show a loading icon. */
   render() {
+    this.coursesSorted = _.reverse(_.sortBy(_.reverse(_.sortBy(this.props.courses, ['courses', 'name'])), ['course', 'semester']));
+
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
   /** Render the page once subscriptions have been received. */
   renderPage() {
-    const [state, dispatch] = React.useReducer(this.exampleReducer(), {
-      column: null,
-      data: this.props.courses,
-      direction: null,
-    });
-    const { column, data, direction } = state;
-
     return (
         <div className="landing-background">
         <Container>
@@ -59,10 +34,7 @@ class Transcript extends React.Component {
           <Table sortable celled>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell
-                    sorted={column === 'semester' ? direction : null}
-                    onClick={() => dispatch({ type: 'CHANGE_SORT', column: 'semester' })}
-                >Semester</Table.HeaderCell>
+                <Table.HeaderCell>Semester</Table.HeaderCell>
                 <Table.HeaderCell>Course</Table.HeaderCell>
                 <Table.HeaderCell>Credits</Table.HeaderCell>
                 <Table.HeaderCell>Status</Table.HeaderCell>
@@ -71,7 +43,7 @@ class Transcript extends React.Component {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {data.map((course) => <CourseItem key={course._id} course={course} Courses={Courses}/>)}
+              {this.coursesSorted.map((course) => <CourseItem key={course._id} course={course} Courses={Courses}/>)}
             </Table.Body>
           </Table>
           <AddCourse/>
