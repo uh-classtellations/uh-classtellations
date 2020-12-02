@@ -1,8 +1,9 @@
 .landing-background {
-    height: 900px;
+    height: auto;
     background: url('images/stargazer.jpg') no-repeat center center fixed;
     background-size:cover;
     padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .external-link {
@@ -10,4 +11,8 @@
 }
 .external-link:hover {
   color: orange;
+}
+
+#transcript-table {
+ margin-bottom: 20px;
 }
