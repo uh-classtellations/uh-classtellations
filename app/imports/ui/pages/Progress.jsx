@@ -79,10 +79,14 @@ function ProgressView() {
 class Progress extends React.Component {
 
   printDocument() {
+    // eslint-disable-next-line no-undef
+    // alert('Now downloading progress image.  This may take a few seconds.');
+    // eslint-disable-next-line no-undef
     const input = document.getElementById('divToPrint');
     html2canvas(input)
         .then((canvas) => {
           const imgData = canvas.toDataURL('image/png');
+          // eslint-disable-next-line new-cap
           const pdf = new jsPDF();
           pdf.addImage(imgData, 'JPEG', 0, 0);
           pdf.save('download.pdf');
