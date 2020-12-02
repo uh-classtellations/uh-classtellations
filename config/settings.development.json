@@ -7,8 +7,7 @@
     { "email": "julie@foo.com", "password": "changeme" },
     { "email": "jimmy@foo.com", "password": "changeme" },
     { "email": "cathy@foo.com", "password": "changeme" },
-    { "email": "conrad@foo.com", "password": "changeme" },
-    { "email": "susan@foo.com", "password": "changeme" }
+    { "email": "conrad@foo.com", "password": "changeme" }
   ],
 
   "defaultData": [

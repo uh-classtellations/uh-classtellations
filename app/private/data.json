@@ -1,7 +1,11 @@
 {
+  "users": [
+    { "email": "susan@foo.com", "password": "changeme" }
+  ],
   "courses": [
     {
-      "semester": "2017 Fall",
+      "semester": "Fall",
+      "year": 2017,
       "name": "ICS 111",
       "credits": 4,
       "status": "Complete",
@@ -9,7 +13,8 @@
       "owner": "john@foo.com"
     },
     {
-      "semester": "2017 Fall",
+      "semester": "Fall",
+      "year": 2017,
       "name": "ICS 141",
       "credits": 3,
       "status": "Complete",
@@ -17,7 +22,8 @@
       "owner": "john@foo.com"
     },
     {
-      "semester": "2018 Spring",
+      "semester": "Spring",
+      "year": 2018,
       "name": "ICS 211",
       "credits": 4,
       "status": "Complete",
@@ -25,7 +31,8 @@
       "owner": "john@foo.com"
     },
     {
-      "semester": "2018 Spring",
+      "semester": "Spring",
+      "year": 2018,
       "name": "ICS 241",
       "credits": 3,
       "status": "Complete",
@@ -33,7 +40,8 @@
       "owner": "john@foo.com"
     },
     {
-      "semester": "2018 Fall",
+      "semester": "Fall",
+      "year": 2018,
       "name": "ICS 212",
       "credits": 3,
       "status": "Complete",
@@ -41,7 +49,8 @@
       "owner": "john@foo.com"
     },
     {
-      "semester": "2019 Spring",
+      "semester": "Spring",
+      "year": 2019,
       "name": "ICS 215",
       "credits": 3,
       "status": "Complete",
@@ -49,7 +58,8 @@
       "owner": "john@foo.com"
     },
     {
-      "semester": "2019 Spring",
+      "semester": "Spring",
+      "year": 2019,
       "name": "ICS 311",
       "credits": 4,
       "status": "Complete",
@@ -57,7 +67,8 @@
       "owner": "john@foo.com"
     },
     {
-      "semester": "2019 Fall",
+      "semester": "Fall",
+      "year": 2019,
       "name": "ICS 314",
       "credits": 3,
       "status": "Complete",
@@ -65,7 +76,8 @@
       "owner": "john@foo.com"
     },
     {
-      "semester": "2018 Fall",
+      "semester": "Fall",
+      "year": 2018,
       "name": "ICS 111",
       "credits": 4,
       "status": "Complete",
@@ -73,7 +85,8 @@
       "owner": "jimmy@foo.com"
     },
     {
-      "semester": "2018 Fall",
+      "semester": "Fall",
+      "year": 2018,
       "name": "ICS 141",
       "credits": 3,
       "status": "Complete",
@@ -81,7 +94,8 @@
       "owner": "jimmy@foo.com"
     },
     {
-      "semester": "2019 Spring",
+      "semester": "Spring",
+      "year": 2019,
       "name": "ICS 211",
       "credits": 4,
       "status": "Complete",
@@ -89,7 +103,8 @@
       "owner": "jimmy@foo.com"
     },
     {
-      "semester": "2019 Spring",
+      "semester": "Spring",
+      "year": 2019,
       "name": "ICS 241",
       "credits": 3,
       "status": "Complete",
@@ -97,7 +112,8 @@
       "owner": "jimmy@foo.com"
     },
     {
-      "semester": "2019 Fall",
+      "semester": "Fall",
+      "year": 2019,
       "name": "ICS 101",
       "credits": 3,
       "status": "Complete",
@@ -105,7 +121,8 @@
       "owner": "jimmy@foo.com"
     },
     {
-      "semester": "2019 Fall",
+      "semester": "Fall",
+      "year": 2019,
       "name": "ICS 212",
       "credits": 3,
       "status": "Complete",
@@ -113,7 +130,8 @@
       "owner": "jimmy@foo.com"
     },
     {
-      "semester": "2019 Fall",
+      "semester": "Fall",
+      "year": 2019,
       "name": "ICS 311",
       "credits": 4,
       "status": "Withdrew",
@@ -121,7 +139,17 @@
       "owner": "jimmy@foo.com"
     },
     {
-      "semester": "2018 Fall",
+      "semester": "Fall",
+      "year": 2020,
+      "name": "ICS 321",
+      "credits": 3,
+      "status": "In Progress",
+      "grade": "TBD",
+      "owner": "jimmy@foo.com"
+    },
+    {
+      "semester": "Fall",
+      "year": 2018,
       "name": "ICS 111",
       "credits": 4,
       "status": "Complete",
@@ -129,7 +157,8 @@
       "owner": "jane@foo.com"
     },
     {
-      "semester": "2019 Spring",
+      "semester": "Spring",
+      "year": 2019,
       "name": "ICS 141",
       "credits": 3,
       "status": "Complete",
@@ -137,7 +166,8 @@
       "owner": "jane@foo.com"
     },
     {
-      "semester": "2019 Fall",
+      "semester": "Fall",
+      "year": 2019,
       "name": "ICS 211",
       "credits": 4,
       "status": "Complete",
@@ -145,7 +175,8 @@
       "owner": "jane@foo.com"
     },
     {
-      "semester": "2020 Spring",
+      "semester": "Spring",
+      "year": 2020,
       "name": "ICS 241",
       "credits": 3,
       "status": "Complete",
@@ -153,7 +184,8 @@
       "owner": "jane@foo.com"
     },
     {
-      "semester": "2020 Spring",
+      "semester": "Spring",
+      "year": 2020,
       "name": "ICS 222",
       "credits": 3,
       "status": "Complete",
@@ -161,7 +193,8 @@
       "owner": "jane@foo.com"
     },
     {
-      "semester": "2020 Fall",
+      "semester": "Fall",
+      "year": 2020,
       "name": "ICS 212",
       "credits": 3,
       "status": "In Progress",
@@ -169,7 +202,8 @@
       "owner": "jane@foo.com"
     },
     {
-      "semester": "2020 Fall",
+      "semester": "Fall",
+      "year": 2020,
       "name": "ICS 101",
       "credits": 3,
       "status": "In Progress",
@@ -177,7 +211,8 @@
       "owner": "jane@foo.com"
     },
     {
-      "semester": "2017 Fall",
+      "semester": "Fall",
+      "year": 2017,
       "name": "ICS 111",
       "credits": 4,
       "status": "Complete",
@@ -185,7 +220,8 @@
       "owner": "cathy@foo.com"
     },
     {
-      "semester": "2017 Fall",
+      "semester": "Fall",
+      "year": 2017,
       "name": "ICS 101",
       "credits": 3,
       "status": "Complete",
@@ -193,7 +229,8 @@
       "owner": "cathy@foo.com"
     },
     {
-      "semester": "2017 Fall",
+      "semester": "Fall",
+      "year": 2017,
       "name": "ICS 141",
       "credits": 3,
       "status": "Complete",
@@ -201,7 +238,8 @@
       "owner": "cathy@foo.com"
     },
     {
-      "semester": "2018 Spring",
+      "semester": "Spring",
+      "year": 2018,
       "name": "ICS 102",
       "credits": 3,
       "status": "Complete",
@@ -209,7 +247,8 @@
       "owner": "cathy@foo.com"
     },
     {
-      "semester": "2018 Spring",
+      "semester": "Spring",
+      "year": 2018,
       "name": "ICS 211",
       "credits": 4,
       "status": "Complete",
@@ -217,7 +256,8 @@
       "owner": "cathy@foo.com"
     },
     {
-      "semester": "2018 Spring",
+      "semester": "Spring",
+      "year": 2018,
       "name": "ICS 241",
       "credits": 3,
       "status": "Complete",
@@ -225,7 +265,8 @@
       "owner": "cathy@foo.com"
     },
     {
-      "semester": "2018 Fall",
+      "semester": "Fall",
+      "year": 2018,
       "name": "ICS 212",
       "credits": 3,
       "status": "Complete",
@@ -233,7 +274,8 @@
       "owner": "cathy@foo.com"
     },
     {
-      "semester": "2018 Fall",
+      "semester": "Fall",
+      "year": 2018,
       "name": "ICS 314",
       "credits": 3,
       "status": "Complete",
@@ -241,7 +283,8 @@
       "owner": "cathy@foo.com"
     },
     {
-      "semester": "2019 Spring",
+      "semester": "Spring",
+      "year": 2019,
       "name": "ICS 311",
       "credits": 4,
       "status": "Complete",
@@ -249,7 +292,8 @@
       "owner": "cathy@foo.com"
     },
     {
-      "semester": "2019 Fall",
+      "semester": "Fall",
+      "year": 2019,
       "name": "ICS 321",
       "credits": 3,
       "status": "Complete",
@@ -257,7 +301,8 @@
       "owner": "cathy@foo.com"
     },
     {
-      "semester": "2019 Fall",
+      "semester": "Fall",
+      "year": 2019,
       "name": "ICS 414",
       "credits": 3,
       "status": "Complete",
@@ -265,7 +310,8 @@
       "owner": "cathy@foo.com"
     },
     {
-      "semester": "2020 Spring",
+      "semester": "Spring",
+      "year": 2020,
       "name": "ICS 421",
       "credits": 3,
       "status": "Complete",
@@ -273,7 +319,8 @@
       "owner": "cathy@foo.com"
     },
     {
-      "semester": "2020 Fall",
+      "semester": "Fall",
+      "year": 2020,
       "name": "ICS 422",
       "credits": 3,
       "status": "In Progress",
@@ -281,7 +328,8 @@
       "owner": "cathy@foo.com"
     },
     {
-      "semester": "2020 Fall",
+      "semester": "Fall",
+      "year": 2020,
       "name": "ICS 111",
       "credits": 4,
       "status": "In Progress",
@@ -289,7 +337,8 @@
       "owner": "jeff@foo.com"
     },
     {
-      "semester": "2020 Fall",
+      "semester": "Fall",
+      "year": 2020,
       "name": "ICS 141",
       "credits": 3,
       "status": "In Progress",
@@ -297,7 +346,8 @@
       "owner": "jeff@foo.com"
     },
     {
-      "semester": "2017 Fall",
+      "semester": "Fall",
+      "year": 2017,
       "name": "ICS 111",
       "credits": 4,
       "status": "Complete",
@@ -305,7 +355,8 @@
       "owner": "conrad@foo.com"
     },
     {
-      "semester": "2017 Fall",
+      "semester": "Fall",
+      "year": 2017,
       "name": "ICS 141",
       "credits": 3,
       "status": "Complete",
@@ -313,7 +364,8 @@
       "owner": "conrad@foo.com"
     },
     {
-      "semester": "2018 Spring",
+      "semester": "Spring",
+      "year": 2018,
       "name": "ICS 211",
       "credits": 4,
       "status": "Complete",
@@ -321,7 +373,8 @@
       "owner": "conrad@foo.com"
     },
     {
-      "semester": "2018 Spring",
+      "semester": "Spring",
+      "year": 2018,
       "name": "ICS 241",
       "credits": 3,
       "status": "Complete",
@@ -329,7 +382,8 @@
       "owner": "conrad@foo.com"
     },
     {
-      "semester": "2018 Fall",
+      "semester": "Fall",
+      "year": 2018,
       "name": "ICS 212",
       "credits": 3,
       "status": "Complete",
@@ -337,7 +391,8 @@
       "owner": "conrad@foo.com"
     },
     {
-      "semester": "2018 Fall",
+      "semester": "Fall",
+      "year": 2018,
       "name": "ICS 314",
       "credits": 3,
       "status": "Complete",
@@ -345,7 +400,8 @@
       "owner": "conrad@foo.com"
     },
     {
-      "semester": "2019 Spring",
+      "semester": "Spring",
+      "year": 2019,
       "name": "ICS 311",
       "credits": 4,
       "status": "Complete",
@@ -353,7 +409,8 @@
       "owner": "conrad@foo.com"
     },
     {
-      "semester": "2019 Fall",
+      "semester": "Fall",
+      "year": 2019,
       "name": "ICS 321",
       "credits": 3,
       "status": "Complete",
@@ -361,7 +418,8 @@
       "owner": "conrad@foo.com"
     },
     {
-      "semester": "2019 Fall",
+      "semester": "Fall",
+      "year": 2019,
       "name": "ICS 451",
       "credits": 3,
       "status": "Complete",
@@ -369,7 +427,8 @@
       "owner": "conrad@foo.com"
     },
     {
-      "semester": "2020 Spring",
+      "semester": "Spring",
+      "year": 2020,
       "name": "ICS 435",
       "credits": 3,
       "status": "Complete",
@@ -377,7 +436,8 @@
       "owner": "conrad@foo.com"
     },
     {
-      "semester": "2020 Spring",
+      "semester": "Spring",
+      "year": 2020,
       "name": "ICS 438",
       "credits": 3,
       "status": "Complete",
@@ -385,7 +445,8 @@
       "owner": "conrad@foo.com"
     },
     {
-      "semester": "2020 Fall",
+      "semester": "Fall",
+      "year": 2020,
       "name": "ICS 484",
       "credits": 3,
       "status": "In Progress",
@@ -393,7 +454,8 @@
       "owner": "conrad@foo.com"
     },
     {
-      "semester": "2020 Spring",
+      "semester": "Spring",
+      "year": 2020,
       "name": "ICS 111",
       "credits": 4,
       "status": "Complete",
@@ -401,7 +463,8 @@
       "owner": "julie@foo.com"
     },
     {
-      "semester": "2020 Spring",
+      "semester": "Spring",
+      "year": 2020,
       "name": "ICS 141",
       "credits": 3,
       "status": "Complete",
@@ -409,7 +472,8 @@
       "owner": "julie@foo.com"
     },
     {
-      "semester": "2020 Fall",
+      "semester": "Fall",
+      "year": 2020,
       "name": "ICS 211",
       "credits": 4,
       "status": "In Progress",
@@ -417,7 +481,8 @@
       "owner": "julie@foo.com"
     },
     {
-      "semester": "2020 Fall",
+      "semester": "Fall",
+      "year": 2020,
       "name": "ICS 241",
       "credits": 3,
       "status": "In Progress",
@@ -425,7 +490,8 @@
       "owner": "julie@foo.com"
     },
     {
-      "semester": "2019 Fall",
+      "semester": "Fall",
+      "year": 2019,
       "name": "ICS 111",
       "credits": 4,
       "status": "Complete",
@@ -433,7 +499,8 @@
       "owner": "susan@foo.com"
     },
     {
-      "semester": "2019 Fall",
+      "semester": "Fall",
+      "year": 2019,
       "name": "ICS 141",
       "credits": 3,
       "status": "Complete",
@@ -441,7 +508,8 @@
       "owner": "susan@foo.com"
     },
     {
-      "semester": "2020 Spring",
+      "semester": "Spring",
+      "year": 2020,
       "name": "ICS 211",
       "credits": 4,
       "status": "Complete",
@@ -449,7 +517,8 @@
       "owner": "susan@foo.com"
     },
     {
-      "semester": "2020 Spring",
+      "semester": "Spring",
+      "year": 2020,
       "name": "ICS 241",
       "credits": 3,
       "status": "Complete",
@@ -457,7 +526,8 @@
       "owner": "susan@foo.com"
     },
     {
-      "semester": "2020 Fall",
+      "semester": "Fall",
+      "year": 2020,
       "name": "ICS 212",
       "credits": 3,
       "status": "In Progress",
@@ -465,7 +535,8 @@
       "owner": "susan@foo.com"
     },
     {
-      "semester": "2020 Fall",
+      "semester": "Fall",
+      "year": 2020,
       "name": "ICS 311",
       "credits": 4,
       "status": "In Progress",
@@ -473,7 +544,8 @@
       "owner": "susan@foo.com"
     },
     {
-      "semester": "2020 Fall",
+      "semester": "Fall",
+      "year": 2020,
       "name": "ICS 102",
       "credits": 3,
       "status": "In Progress",

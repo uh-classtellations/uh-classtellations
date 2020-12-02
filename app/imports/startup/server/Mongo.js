@@ -1,8 +1,14 @@
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 import { Stuffs } from '../../api/stuff/Stuff.js';
 import { Courses } from '../../api/course/Course';
 
 /* eslint-disable no-console */
+/** Define a user in the Meteor accounts package. This enables login. Username is the email address. */
+function createUser({ email, password }) {
+  console.log(`Defining user ${email}`);
+  Accounts.createUser({ email: email, password: password });
+}
 
 /** Initialize the database with a default data document. */
 function addData(data) {
@@ -19,10 +25,10 @@ if (Stuffs.collection.find().count() === 0) {
 }
 
 /** Defines new course for user. Error if exact course already exists. */
-function addCourse({ semester, name, credits, status, grade, owner }) {
+function addCourse({ semester, year, name, credits, status, grade, owner }) {
   console.log(`Defining course ${name}`);
   // Create the profile.
-  Courses.collection.insert({ semester, name, credits, status, grade, owner });
+  Courses.collection.insert({ semester, year, name, credits, status, grade, owner });
 }
 
 /**
@@ -33,9 +39,10 @@ function addCourse({ semester, name, credits, status, grade, owner }) {
  * For more info on assets, see https://docs.meteor.com/api/assets.html
  * User count check is to make sure we don't load the file twice, which would generate errors due to duplicate info.
  */
-if ((Meteor.settings.loadAssetsFile) && (Meteor.users.find().count() < 10)) {
+if ((Meteor.settings.loadAssetsFile) && (Meteor.users.find().count() < 9)) {
   const assetsFileName = 'data.json';
   console.log(`Loading data from private/${assetsFileName}`);
   const jsonData = JSON.parse(Assets.getText(assetsFileName));
+  jsonData.users.map(user => createUser(user));
   jsonData.courses.map(course => addCourse(course));
 }

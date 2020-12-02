@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Segment, Header, Button } from 'semantic-ui-react';
-import { AutoForm, ErrorsField, SelectField, SubmitField } from 'uniforms-semantic';
+import { AutoForm, ErrorsField, SelectField, SubmitField, NumField } from 'uniforms-semantic';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -11,9 +11,10 @@ import { Courses } from '../../api/course/Course';
 const formSchema = new SimpleSchema({
   semester: {
     type: String,
-    allowedValues: ['2016 Spring', '2016 Fall', '2017 Spring', '2017 Fall', '2018 Spring', '2018 Fall', '2019 Spring', '2019 Fall', '2020 Spring', '2020 Fall', '2021 Spring'],
-    defaultValue: '2020 Fall',
+    allowedValues: ['Fall', 'Spring', 'Summer'],
+    defaultValue: 'Fall',
   },
+  year: Number,
   name: {
     type: String,
     allowedValues: ['ICS 101', 'ICS 102', 'ICS 110', 'ICS 111', 'ICS 141', 'ICS 210',
@@ -50,11 +51,13 @@ const bridge = new SimpleSchema2Bridge(formSchema);
 /** Renders the Page for adding a document. */
 class AddCourse extends React.Component {
 
+  d = new Date();
+
   /** On submit, insert the data. */
   submit(data, formRef) {
-    const { semester, name, credits, status, grade } = data;
+    const { semester, year, name, credits, status, grade } = data;
     const owner = Meteor.user().username;
-    Courses.collection.insert({ semester, name, credits, status, grade, owner },
+    Courses.collection.insert({ semester, year, name, credits, status, grade, owner },
         (error) => {
           if (error) {
             swal('Error', error.message, 'error');
@@ -82,6 +85,7 @@ class AddCourse extends React.Component {
             }} schema={bridge} onSubmit={data => this.submit(data, fRef)}>
               <Segment>
                 <SelectField name='semester'/>
+                <NumField name='year' decimal={false} max={this.d.getFullYear()} min={1905}/>
                 <SelectField name='name'/>
                 <SelectField name='credits'/>
                 <SelectField name='status'/>

@@ -16,7 +16,7 @@ class Transcript extends React.Component {
 
   /** If the subscription(s) have been received, sort collection, and render the page, otherwise show a loading icon. */
   render() {
-    this.coursesSorted = _.reverse(_.sortBy(_.reverse(_.sortBy(this.props.courses, ['courses', 'name'])), ['course', 'semester']));
+    this.coursesSorted = _.reverse(_.sortBy(_.reverse(_.sortBy(this.props.courses, ['courses', 'semester', 'name'])), ['courses', 'year']));
 
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
@@ -38,6 +38,7 @@ class Transcript extends React.Component {
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell>Semester</Table.HeaderCell>
+                  <Table.HeaderCell>Year</Table.HeaderCell>
                   <Table.HeaderCell>Course</Table.HeaderCell>
                   <Table.HeaderCell>Credits</Table.HeaderCell>
                   <Table.HeaderCell>Status</Table.HeaderCell>

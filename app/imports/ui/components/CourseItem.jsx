@@ -21,6 +21,7 @@ class CourseItem extends React.Component {
     return (
         <Table.Row className={this.progressColors(this.props.course.status)}>
           <Table.Cell>{this.props.course.semester}</Table.Cell>
+          <Table.Cell>{this.props.course.year}</Table.Cell>
           <Table.Cell>{this.props.course.name}</Table.Cell>
           <Table.Cell>{this.props.course.credits}</Table.Cell>
           <Table.Cell>{this.props.course.status}</Table.Cell>

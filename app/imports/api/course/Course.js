@@ -12,6 +12,7 @@ class CoursesCollection {
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
       semester: String,
+      year: Number,
       name: String,
       credits: Number,
       status: String,
