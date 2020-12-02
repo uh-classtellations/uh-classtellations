@@ -5,41 +5,38 @@
 import React, { useState } from 'react';
 import { Container } from 'semantic-ui-react';
 import Board, { moveCard } from '@lourenci/react-kanban';
-// import ProgressView from '../components/ProgressView';
-
-// import Semester from '../components/Semester';
 
 const board = {
   columns: [
     {
       id: 1,
-      title: 'Spring 2020',
+      title: 'Fall 2019',
       cards: [
         {
           id: 1,
-          title: 'Card title 1',
-          description: 'Card content',
+          title: 'ICS 211',
+          description: 'Introduction to Computer Science II',
         },
         {
           id: 2,
-          title: 'Card title 2',
-          description: 'Card content',
+          title: 'ICS 212',
+          description: 'Program Structure',
         },
         {
           id: 3,
-          title: 'Card title 3',
-          description: 'Card content',
+          title: 'ICS 311',
+          description: 'Algorithms',
         },
       ],
     },
     {
       id: 2,
-      title: 'Summer 2020',
+      title: 'Spring 2020',
       cards: [
         {
           id: 9,
-          title: 'Card title 9',
-          description: 'Card content',
+          title: 'ICS 314',
+          description: 'Software Engineering I',
         },
       ],
     },
@@ -49,13 +46,13 @@ const board = {
       cards: [
         {
           id: 10,
-          title: 'Card title 10',
-          description: 'Card content',
+          title: 'ICS 321',
+          description: 'Database Systems I',
         },
         {
           id: 11,
-          title: 'Card title 11',
-          description: 'Card content',
+          title: 'ICS 235',
+          description: 'Machine Learning Methods',
         },
       ],
     },
@@ -63,7 +60,6 @@ const board = {
 };
 
 function ProgressView() {
-
   const [controlledBoard, setBoard] = useState(board);
 
   function handleCardMove(_card, source, destination) {
@@ -91,4 +87,3 @@ class Progress extends React.Component {
 }
 
 export default Progress;
-
