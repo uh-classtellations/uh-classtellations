@@ -54,20 +54,17 @@ class ListAdvisors extends React.Component {
 
   requirements = [{
       degree: 'Bachelor of Science in Computer Science',
-    description: 'The Bachelor of Science in Computer Science provides an in-depth foundation in programming, software development, ' +
-        'technology systems, science, and math. The ICS Department offers a General degree and two specializations: Data Science and Security Science.',
+    description: 'Focuses on software technology and gives the student a firm foundation in science and math.',
     link: 'http://www.ics.hawaii.edu/academics/undergraduate-degree-programs/bs-ics/',
     },
     {
       degree: 'Bachelor of Science in Computer Engineering',
-      description: 'The Department of Information and Computer Sciences and the Department of Electrical Engineering offer a joint Bachelor of Science degree in Computer Engineering (BS CE).',
+      description: 'Focuses on hardware and software technologies and how they are used together to create systems.',
       link: 'http://www.ics.hawaii.edu/academics/undergraduate-degree-programs/bs-ce/',
     },
     {
       degree: 'Bachelor of Arts in Information and Computer Science',
-      description: 'The Bachelor of Arts (BA) degree allows you to combine computer science with another discipline. ' +
-          'You might find the BA degree of interest if you are also interested in biology, ' +
-          'entrepreneurship, game design, graphic arts, financial engineering, foreign languages, or other disciplines.',
+      description: 'Allows students to combine computer science with another discipline.',
       link: 'http://www.ics.hawaii.edu/academics/undergraduate-degree-programs/ba-ics/',
     },
   ];
@@ -88,7 +85,7 @@ class ListAdvisors extends React.Component {
             </Card.Group>
           </Container>
           <Container className="add-padding">
-            <Header as="h1" textAlign="center" inverted>Graduation Requirements</Header>
+            <Header as="h1" textAlign="center" inverted>Undergraduate Degree Requirements</Header>
             <Card.Group>
               {this.requirements.map((requirement, index) => <Requirement key={index} requirement={requirement}/>)}
             </Card.Group>
