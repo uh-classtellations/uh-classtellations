@@ -1,16 +1,15 @@
 .landing-background {
-    height: auto;
+    height: 900px;
     background: url('images/stargazer.jpg') no-repeat center center fixed;
     background-size:cover;
     padding-top: 20px;
-    padding-bottom: 20px;
 }
 
 .external-link {
-  color: lawngreen;
+    color: lawngreen;
 }
 .external-link:hover {
-  color: orange;
+    color: orange;
 }
 
 #transcript-table {
@@ -19,4 +18,32 @@
 
 .add-padding {
   padding: 25px
+}
+=======
+.list-group-item {
+    cursor: pointer;
+}
+
+.react-kanban-column {
+    font-size: 24px;
+    text-align: center;
+    padding: 20px;
+    outline-style: none;
+    outline-color: white;
+}
+
+.react-kanban-card {
+    font-size: 14px;
+    text-align: center;
+    padding: 5px;
+    margin: 10px;
+    outline-style: solid;
+    word-wrap: break-word;
+    width: 150px;
+}
+
+#progress-view {
+    display: flex;
+    justify-content: center;
+    aligntItems: center;
 }
