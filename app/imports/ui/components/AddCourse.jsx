@@ -84,13 +84,13 @@ class AddCourse extends React.Component {
               fRef = ref;
             }} schema={bridge} onSubmit={data => this.submit(data, fRef)}>
               <Segment>
-                <SelectField name='semester'/>
-                <NumField name='year' decimal={false} max={this.d.getFullYear()} min={1905}/>
-                <SelectField name='name'/>
-                <SelectField name='credits'/>
-                <SelectField name='status'/>
-                <SelectField name='grade'/>
-                <SubmitField value='Submit'/>
+                <SelectField id='semester' name='semester'/>
+                <NumField id='year' name='year' decimal={false} max={this.d.getFullYear()} min={1905}/>
+                <SelectField id='name' name='name'/>
+                <SelectField id='credits' name='credits'/>
+                <SelectField id='status' name='status'/>
+                <SelectField id='grade' name='grade'/>
+                <SubmitField id='submit' value='Submit'/>
                 <ErrorsField/>
               </Segment>
             </AutoForm>
