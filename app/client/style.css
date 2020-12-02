@@ -24,6 +24,10 @@
     cursor: pointer;
 }
 
+.mb5 {
+  margin: 20px;
+}
+
 .react-kanban-column {
     font-size: 24px;
     text-align: center;

@@ -1,10 +1,12 @@
 // Drag-and-drop made with help from https://codesandbox.io/s/react-kanban-demo-forked-e3k0w?file=/src/index.js:0-132
 
-// Arrows made with help from https://codesandbox.io/embed/github/Eliav2/react-xarrows/tree/master/examples?fontsize=14&hidenavigation=1&theme=dark
+// Arrows (in progress) made with help from https://codesandbox.io/embed/github/Eliav2/react-xarrows/tree/master/examples?fontsize=14&hidenavigation=1&theme=dark
 
 import React, { useState } from 'react';
 import { Container } from 'semantic-ui-react';
 import Board, { moveCard } from '@lourenci/react-kanban';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const board = {
   columns: [
@@ -75,9 +77,24 @@ function ProgressView() {
 }
 
 class Progress extends React.Component {
+
+  printDocument() {
+    const input = document.getElementById('divToPrint');
+    html2canvas(input)
+        .then((canvas) => {
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jsPDF();
+          pdf.addImage(imgData, 'JPEG', 0, 0);
+          pdf.save('download.pdf');
+        });
+  }
+
   render() {
     return (
-        <div className='landing-background'>
+        <div id='divToPrint' className='landing-background'>
+          <div className='mb5'>
+            <button onClick={this.printDocument}>Print</button>
+          </div>
           <Container id='progress-view'>
             <ProgressView/>
           </Container>
