@@ -8,6 +8,17 @@ import Board, { moveCard } from '@lourenci/react-kanban';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
+/* Notes for implementing course data:
+* import board as object of nested arrays of columns with arrays of cards
+* ^should be separate component -> board for columns to load here, separate card component
+* how to add course??? -> Collections?
+* id: number (need class count tracker for id)
+* title: course' name
+* description???? -> should add to course collection/schema?
+* column title: semester
+* bring in sort from Transcript render to load into columns and cards
+* */
+
 const board = {
   columns: [
     {
