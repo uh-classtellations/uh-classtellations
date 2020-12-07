@@ -5,7 +5,7 @@ import { navBar } from './navbar.component';
 import { advisorsPage } from './advisors.page';
 import { progressPage } from './progress.page';
 import { transcriptPage } from './transcript.page';
-// import { addCourseComponent } from './addcourse.component';
+import { addCourseComponent } from './addcourse.component';
 
 /* global fixture:false, test:false */
 
@@ -30,7 +30,7 @@ test('Test that signin, pages, and signout work', async (testController) => {
   await progressPage.isDisplayed(testController);
   await navBar.gotoTranscript(testController);
   await transcriptPage.isDisplayed(testController);
-  // await addCourseComponent.addCourse(testController);
+  await addCourseComponent.addCourse(testController);
   await navBar.logout(testController);
   await signoutPage.isDisplayed(testController);
 });
