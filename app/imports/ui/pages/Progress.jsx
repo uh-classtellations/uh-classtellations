@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { Container } from 'semantic-ui-react';
 import Board, { moveCard } from '@lourenci/react-kanban';
 import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import html2canvas from 'html2canvas-render-offscreen';
 
 const board = {
   columns: [
@@ -83,13 +83,20 @@ class Progress extends React.Component {
     // alert('Now downloading progress image.  This may take a few seconds.');
     // eslint-disable-next-line no-undef
     const input = document.getElementById('divToPrint');
-    html2canvas(input)
-        .then((canvas) => {
-          const imgData = canvas.toDataURL('image/png');
-          // eslint-disable-next-line new-cap
-          const pdf = new jsPDF();
-          pdf.addImage(imgData, 'JPEG', 0, 0);
-          pdf.save('download.pdf');
+    const divHeight = input.clientHeight;
+    const divWidth = input.clientWidth;
+    const ratio = divHeight / divWidth;
+
+    html2canvas(input, { scale: '1' }).then((canvas) => {
+      const imgData = canvas.toDataURL('image/jpeg');
+      const pdfDOC = new jsPDF("l", "mm", "a0"); //  use a4 for smaller page
+
+      const width = pdfDOC.internal.pageSize.getWidth();
+      let height = pdfDOC.internal.pageSize.getHeight();
+      height = ratio * width;
+
+      pdfDOC.addImage(imgData, 'JPEG', 0, 0, width - 20, height - 10);
+      pdfDOC.save('summary.pdf');
         });
   }
 

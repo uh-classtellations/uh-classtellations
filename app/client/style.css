@@ -1,8 +1,8 @@
 .landing-background {
-    height: 900px;
     background: url('images/stargazer.jpg') no-repeat center center fixed;
     background-size:cover;
     padding-top: 20px;
+    height: 900px !important;
 }
 
 .external-link {
@@ -55,4 +55,12 @@
     display: flex;
     justify-content: center;
     aligntItems: center;
+    visibility: visible;
+    width: 1000px !important; height: 900px !important; visibility: visible;
+}
+
+.progress-view { width: 1000px !important; height: 900px !important; visibility: hidden;}
+
+.divToPrint {
+    width: 1000px !important; height: 900px !important; visibility: visible;
 }
