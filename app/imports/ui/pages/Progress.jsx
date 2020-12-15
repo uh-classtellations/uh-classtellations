@@ -72,10 +72,17 @@ const getListStyle = isDraggingOver => ({
 
 class Progress extends React.Component {
 
-  state = {
-    items: getItems(10),
-    selected: getItems(5, 10)
-  };
+  componentDidMount() {
+    console.log('tt' + this.props.courses);
+  }
+
+  // state = {
+  //   // items: getItems(10),
+  //   items: Array.from(this.props.courses.map((course) => ({
+  //     id: course._id,
+  //     content: `ICS ${course.num}` }))),
+  //   selected: getItems(5),
+  // };
 
   id2List = {
     droppable: 'items',
@@ -96,7 +103,7 @@ class Progress extends React.Component {
       const items = reorder(
           this.getList(source.droppableId),
           source.index,
-          destination.index
+          destination.index,
       );
 
       let state = { items };
@@ -122,6 +129,10 @@ class Progress extends React.Component {
   };
 
   render() {
+
+    console.log(Array.from(this.props.courses.map((course) => ({ a: course.num, b: course._id }))));
+    console.log(this.props.courses);
+
     return (
         <div className='landing-background'>
           <DragDropContext onDragEnd={this.onDragEnd}>
@@ -130,10 +141,10 @@ class Progress extends React.Component {
                   <div
                       ref={provided.innerRef}
                       style={getListStyle(snapshot.isDraggingOver)}>
-                    {this.state.items.map((item, index) => (
+                    {this.props.courses.map((item, index) => (
                         <Draggable
-                            key={item.id}
-                            draggableId={item.id}
+                            key={item._id}
+                            draggableId={item._id}
                             index={index}>
                           {(provided, snapshot) => (
                               <div
@@ -144,7 +155,7 @@ class Progress extends React.Component {
                                       snapshot.isDragging,
                                       provided.draggableProps.style
                                   )}>
-                                {item.content}
+                                {item.num}
                               </div>
                           )}
                         </Draggable>
@@ -158,10 +169,10 @@ class Progress extends React.Component {
                   <div
                       ref={provided.innerRef}
                       style={getListStyle(snapshot.isDraggingOver)}>
-                    {this.state.selected.map((item, index) => (
+                    {this.props.courses.map((item, index) => (
                         <Draggable
-                            key={item.id}
-                            draggableId={item.id}
+                            key={item._id}
+                            draggableId={item._id}
                             index={index}>
                           {(provided, snapshot) => (
                               <div
@@ -172,7 +183,7 @@ class Progress extends React.Component {
                                       snapshot.isDragging,
                                       provided.draggableProps.style
                                   )}>
-                                {item.content}
+                                {item.num}
                               </div>
                           )}
                         </Draggable>
@@ -181,7 +192,7 @@ class Progress extends React.Component {
                   </div>
               )}
             </Droppable>
-            {this.props.courses.map((course) => <ProgCourse key={course._id} course={course} Courses={Courses}/>)}
+            {/*{this.props.courses.map((course) => <ProgCourse key={course._id} course={course} Courses={Courses}/>)}*/}
           </DragDropContext>
         </div>
 

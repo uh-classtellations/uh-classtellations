@@ -1,16 +1,16 @@
 import React from 'react';
-import { Item } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { Draggable } from 'react-beautiful-dnd';
 
 /** Renders a single row in Transcript table. See pages/Transcript.jsx. */
 class ProgCourse extends React.Component {
 
   render() {
     return (
-        <Item className='prog-course'>
+        <Draggable className='prog-course'>
           ICS {this.props.course.num}
-        </Item>
+        </Draggable>
     );
   }
 }
