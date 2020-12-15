@@ -6,6 +6,10 @@ import Board, { moveCard } from '@lourenci/react-kanban';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
+import { Meteor } from 'meteor/meteor';
+import PropTypes from 'prop-types';
+import { withTracker } from 'meteor/react-meteor-data';
+import { Courses } from '../../api/course/Course';
 
 class Progress extends React.Component {
 
@@ -18,4 +22,17 @@ class Progress extends React.Component {
   }
 }
 
-export default Progress;
+Progress.propTypes = {
+  courses: PropTypes.array.isRequired,
+  Courses: PropTypes.object.isRequired,
+  ready: PropTypes.bool.isRequired,
+};
+
+export default withTracker(() => {
+  // Get access to Stuff documents.
+  const subscription = Meteor.subscribe(Courses.userPublicationName);
+  return {
+    courses: Courses.collection.find({}).fetch(),
+    ready: subscription.ready(),
+  };
+})(Progress);
