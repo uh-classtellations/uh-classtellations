@@ -11,18 +11,18 @@ function createUser({ email, password }) {
 }
 
 /** Initialize the database with a default data document. */
-function addData(data) {
-  console.log(`  Adding: ${data.name} (${data.owner})`);
-  Stuffs.collection.insert(data);
-}
+// function addData(data) {
+//   console.log(`  Adding: ${data.name} (${data.owner})`);
+//   Stuffs.collection.insert(data);
+// }
 
 /** Initialize the collection if empty. */
-if (Stuffs.collection.find().count() === 0) {
-  if (Meteor.settings.defaultData) {
-    console.log('Creating default data.');
-    Meteor.settings.defaultData.map(data => addData(data));
-  }
-}
+// if (Stuffs.collection.find().count() === 0) {
+//   if (Meteor.settings.defaultData) {
+//     console.log('Creating default data.');
+//     Meteor.settings.defaultData.map(data => addData(data));
+//   }
+// }
 
 /** Defines new course for user. Error if exact course already exists. */
 function addCourse({ semester, year, name, credits, status, grade, owner }) {

@@ -28,28 +28,14 @@
   margin: 20px;
 }
 
-.react-kanban-column {
-    font-size: 24px;
-    text-align: center;
-    padding: 20px;
-    outline-style: none;
-    outline-color: white;
-}
-
-.react-kanban-card {
-    font-size: 14px;
-    text-align: center;
-    padding: 5px;
-    margin: 10px;
-    outline-style: solid;
-    word-wrap: break-word;
-    width: 150px;
-}
-
 /*#div-to-print {*/
 /*  margin-left: auto;*/
 /*  margin-right: auto;*/
 /*}*/
+
+.progress-course {
+    
+}
 
 #progress-view {
     display: flex;

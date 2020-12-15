@@ -11,9 +11,8 @@ class CoursesCollection {
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
-      semester: String,
-      year: Number,
-      name: String,
+      semester: Number,
+      num: Number,
       credits: Number,
       status: String,
       grade: String,

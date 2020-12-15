@@ -2,7 +2,11 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
 
+import { Courses } from '../../api/course/Course';
+
 /* eslint-disable no-console */
+
+const defaultProgress = [[0, 111], [0, 141], [1, 211], [1, 241]];
 
 function createUser(email, password, role) {
   console.log(`  Creating user ${email}.`);
@@ -15,6 +19,9 @@ function createUser(email, password, role) {
     Roles.createRole(role, { unlessExists: true });
     Roles.addUsersToRoles(userID, 'admin');
   }
+  defaultProgress.forEach(({ s, n }) => {
+    Courses.collection.insert({ semester: s, num: n, credits: 3, status: '', grade: '', owner: email });
+  });
 }
 
 /** When running app for first time, pass a settings file to set up a default user account. */
