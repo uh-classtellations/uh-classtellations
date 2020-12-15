@@ -15,6 +15,7 @@ import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Courses } from '../../api/course/Course';
+import { Semesters } from '../../api/semester/Semester';
 
 // fake data generator
 const getItems = (count, offset = 0) =>
@@ -72,10 +73,6 @@ const getListStyle = isDraggingOver => ({
 
 class Progress extends React.Component {
 
-  componentDidMount() {
-    console.log('tt' + this.props.courses);
-  }
-
   // state = {
   //   // items: getItems(10),
   //   items: Array.from(this.props.courses.map((course) => ({
@@ -84,10 +81,11 @@ class Progress extends React.Component {
   //   selected: getItems(5),
   // };
 
-  id2List = {
-    droppable: 'items',
-    droppable2: 'selected',
-  };
+  // id2List = {
+  //   droppable: 'items',
+  //   droppable2: 'selected',
+  // };
+
 
   getList = id => this.state[this.id2List[id]];
 
@@ -133,6 +131,10 @@ class Progress extends React.Component {
     console.log(Array.from(this.props.courses.map((course) => ({ a: course.num, b: course._id }))));
     console.log(this.props.courses);
 
+
+    // const id2List = Array.from(this.props.sems.map((sem) => ({ `droppable${sem.semester}`: `sem${semester}` })));
+    // );
+
     return (
         <div className='landing-background'>
           <DragDropContext onDragEnd={this.onDragEnd}>
@@ -164,34 +166,34 @@ class Progress extends React.Component {
                   </div>
               )}
             </Droppable>
-            <Droppable droppableId="droppable2">
-              {(provided, snapshot) => (
-                  <div
-                      ref={provided.innerRef}
-                      style={getListStyle(snapshot.isDraggingOver)}>
-                    {this.props.courses.map((item, index) => (
-                        <Draggable
-                            key={item._id}
-                            draggableId={item._id}
-                            index={index}>
-                          {(provided, snapshot) => (
-                              <div
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                  style={getItemStyle(
-                                      snapshot.isDragging,
-                                      provided.draggableProps.style
-                                  )}>
-                                {item.num}
-                              </div>
-                          )}
-                        </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </div>
-              )}
-            </Droppable>
+            {/*<Droppable droppableId="droppable2">*/}
+            {/*  {(provided, snapshot) => (*/}
+            {/*      <div*/}
+            {/*          ref={provided.innerRef}*/}
+            {/*          style={getListStyle(snapshot.isDraggingOver)}>*/}
+            {/*        {this.props.courses.map((item, index) => (*/}
+            {/*            <Draggable*/}
+            {/*                key={item._id}*/}
+            {/*                draggableId={item._id}*/}
+            {/*                index={index}>*/}
+            {/*              {(provided, snapshot) => (*/}
+            {/*                  <div*/}
+            {/*                      ref={provided.innerRef}*/}
+            {/*                      {...provided.draggableProps}*/}
+            {/*                      {...provided.dragHandleProps}*/}
+            {/*                      style={getItemStyle(*/}
+            {/*                          snapshot.isDragging,*/}
+            {/*                          provided.draggableProps.style*/}
+            {/*                      )}>*/}
+            {/*                    {item.num}*/}
+            {/*                  </div>*/}
+            {/*              )}*/}
+            {/*            </Draggable>*/}
+            {/*        ))}*/}
+            {/*        {provided.placeholder}*/}
+            {/*      </div>*/}
+            {/*  )}*/}
+            {/*</Droppable>*/}
             {/*{this.props.courses.map((course) => <ProgCourse key={course._id} course={course} Courses={Courses}/>)}*/}
           </DragDropContext>
         </div>
@@ -203,6 +205,8 @@ class Progress extends React.Component {
 Progress.propTypes = {
   courses: PropTypes.array.isRequired,
   Courses: PropTypes.object.isRequired,
+  sems: PropTypes.array.isRequired,
+  Sems: PropTypes.object.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
@@ -211,6 +215,7 @@ export default withTracker(() => {
   const subscription = Meteor.subscribe(Courses.userPublicationName);
   return {
     courses: Courses.collection.find({}).fetch(),
+    sems: Semesters.collection.find({}).fetch(),
     ready: subscription.ready(),
   };
 })(Progress);
