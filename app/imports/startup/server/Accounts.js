@@ -19,9 +19,12 @@ function createUser(email, password, role) {
     Roles.createRole(role, { unlessExists: true });
     Roles.addUsersToRoles(userID, 'admin');
   }
-  defaultProgress.forEach(({ s, n }) => {
-    Courses.collection.insert({ semester: s, num: n, credits: 3, status: '', grade: '', owner: email });
-  });
+  for (let i = 0; i < defaultProgress.length; i++) {
+    const s = defaultProgress[i][0];
+    const n = defaultProgress[i][1];
+    Courses.collection.insert({ semester: s, num: n, credits: 3, status: '--', grade: '--', owner: email });
+    console.log(`Inserting ${s} for ${email}`);
+  }
 }
 
 /** When running app for first time, pass a settings file to set up a default user account. */

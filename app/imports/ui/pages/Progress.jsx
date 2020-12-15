@@ -6,6 +6,8 @@ import Board, { moveCard } from '@lourenci/react-kanban';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
+import ProgCourse from '../components/ProgCourse';
+
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -16,7 +18,7 @@ class Progress extends React.Component {
   render() {
     return (
         <div className='landing-background'>
-
+          {this.props.courses.map((course) => <ProgCourse key={course._id} course={course} Courses={Courses}/>)}
         </div>
     );
   }
