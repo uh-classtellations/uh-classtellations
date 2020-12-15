@@ -1,8 +1,9 @@
 .landing-background {
-    height: 900px;
+    height: 100%;
+    min-height: 900px;
     background: url('images/stargazer.jpg') no-repeat center center fixed;
     background-size:cover;
-    padding-top: 20px;
+    padding: 20px 20px 20px 20px;
 }
 
 .external-link {
