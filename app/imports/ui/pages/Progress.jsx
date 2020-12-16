@@ -58,6 +58,8 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   userSelect: 'none',
   padding: grid * 2,
   margin: `0 0 ${grid}px 0`,
+  width: '80px',
+  height: '60px',
 
   // change background colour if dragging
   background: isDragging ? 'lightgreen' : 'grey',
@@ -82,6 +84,8 @@ const defSems = (count) => {
   return result;
 };
 
+const semesters = defSems(10);
+
 class Progress extends React.Component {
 
   // state = {
@@ -99,8 +103,9 @@ class Progress extends React.Component {
 
   getList = id => this.state[this.id2List[id]];
 
-  onDragEnd = result => {
+  onDragEnd = (result) => {
     const { source, destination } = result;
+
 
     // dropped outside the list
     if (!destination) {
@@ -121,7 +126,15 @@ class Progress extends React.Component {
       //
       //   this.setState(state);
     } else {
-      // TODO to be specific to owner
+
+      let sDropID = source.droppableId.toString();
+      let sSemPos = sDropID.substring(sDropID.length - 1);
+
+      let c = semesters[0][source.index];
+      console.log(c);
+
+      console.log(sSemPos);
+      // let semPos = sDropID.substring(sDropID.length() - 1);
       // Semesters.collection.update({ $pull: { semCourses: source.num } });
       // Semesters.collection.update({ $push: { semCourses: source.num } });
       // const result = move(
@@ -145,7 +158,6 @@ class Progress extends React.Component {
 
     // const id2List = Array.from(this.props.sems.map((sem) => ({ `droppable${sem.semester}`: `sem${semester}` })));
     // );
-    const semesters = defSems(10);
     console.log('9' + semesters);
     this.props.courses.map((course) => semesters[course.semester].push(course.num));
     // const sem = course.semester;
@@ -165,7 +177,7 @@ class Progress extends React.Component {
     return (
         <div className='landing-background'>
           <DragDropContext onDragEnd={this.onDragEnd}>
-            <Grid>
+            <Grid className='progress-view'>
               {semesters.map((sem) =>
                   <Grid.Column className='semester'>
                     <Droppable droppableId={`drop${semesters.indexOf(sem)}`}>
