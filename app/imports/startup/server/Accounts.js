@@ -6,7 +6,16 @@ import { Courses } from '../../api/course/Course';
 
 /* eslint-disable no-console */
 
-const defaultProgress = [[0, 111], [0, 141], [1, 211], [1, 241], [2, 212], [2, 311]];
+const defaultProgress = [
+  [0, 111], [0, 141],
+  [1, 211], [1, 241],
+  [2, 212], [2, 311], [2, 314],
+  [3, 321], [3, 332], [3, 351],
+  [4, 414], [4, 313], [4, 312],
+  [5, 422], [5, 427], [5, 496],
+];
+
+const fourCreds = [111, 211, 311];
 
 function createUser(email, password, role) {
 
@@ -23,12 +32,14 @@ function createUser(email, password, role) {
   for (let i = 0; i < defaultProgress.length; i++) {
     const s = defaultProgress[i][0];
     const n = defaultProgress[i][1];
-    Courses.collection.insert({ semester: s, num: n, credits: 3, status: '--', grade: '--', owner: email },
+    let c = 3;
+    if (fourCreds.includes(n)) c = 4;
+    Courses.collection.insert({ semester: s, num: n, credits: c, status: '--', grade: '--', owner: email },
         (error) => {
           if (error) {
             console.log('Course init failed');
           } else {
-            console.log(`Inserted ${n} at ${s} for ${email}`);
+            // console.log(`Inserted ${n} at ${s} for ${email}`);
           }
         });
   }

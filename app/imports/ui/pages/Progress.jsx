@@ -15,8 +15,6 @@ import swal from 'sweetalert';
 
 import { Courses } from '../../api/course/Course';
 
-import { View } from 'react-native';
-
 const grid = 5;
 
 const getItemStyle = (isDragging, draggableStyle) => ({
@@ -27,7 +25,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 
   background: 'rgba(250, 250, 250, 0.7)',
   borderRadius: 3,
-  width: 80,
+  width: 'auto',
   height: 40,
 
   // change background colour if dragging
@@ -43,7 +41,8 @@ const getListStyle = isDraggingOver => ({
   flexDirection: 'column',
   justifyContent: 'space-evenly',
   padding: grid,
-  width: 90,
+  width: 'auto',
+  minWidth: 40,
   height: 900,
 });
 
@@ -78,7 +77,7 @@ class Progress extends React.Component {
   constructor() {
     super();
 
-    this.numSems = 10;
+    this.numSems = 9;
 
     this.firstYear = 2018;
 
@@ -99,6 +98,28 @@ class Progress extends React.Component {
       [211, 212],
       [211, 311],
       [241, 311],
+      [211, 314],
+      [211, 314],
+      [311, 321],
+      [311, 332],
+      [311, 496],
+      [314, 321],
+      [314, 332],
+      [314, 496],
+      [212, 351],
+      [311, 351],
+      [314, 351],
+      [212, 313],
+      [311, 313],
+      [314, 313],
+      [212, 312],
+      [311, 312],
+      [314, 312],
+      [311, 414],
+      [314, 4141],
+      [311, 422],
+      [311, 461],
+      [314, 427],
     ];
   }
 
@@ -178,9 +199,12 @@ class Progress extends React.Component {
 
       Courses.collection.update({ _id: theId }, { $set: { semester: dSemPos } });
     }
+    this.render();
   };
 
   render() {
+
+    // not efficient, but it wouldn't update anywhere else
     this.props.courses.map((c) => {
       if (this.owner == null) {
         this.owner = c.owner;
@@ -191,42 +215,50 @@ class Progress extends React.Component {
 
     return (
         <div className='landing-background'>
-          <DragDropContext onDragEnd={this.onDragEnd}>
-            <div>
-              {this.semesters.map((sem) =>
-                  <div>
-                    <Droppable droppableId={`drop${this.semesters.indexOf(sem)}`}>
-                      {(provided, snapshot) => (
-                          <div ref={provided.innerRef}
-                               style={getListStyle(snapshot.isDraggingOver)}>
-                            {this.semNames[this.semesters.indexOf(sem)]}
-                            {sem.map((num, index) =>
-                                <Draggable
-                                    key={`${this.semesters.indexOf(sem)}-${num}`}
-                                    draggableId={`drag-${num}`}
-                                    index={index}>
-                                  {(provided, snapshot) => (
-                                      <div id={`drag-${num}`}
-                                           ref={provided.innerRef}
-                                           {...provided.draggableProps}
-                                           {...provided.dragHandleProps}
-                                           style={getItemStyle(
-                                               snapshot.isDragging,
-                                               provided.draggableProps.style,
-                                           )}>
-                                        ICS {num}
-                                      </div>
-                                  )}
-                                </Draggable>)}
-                            {provided.placeholder}
-                          </div>)}
-                    </Droppable>
-                  </div>)}
-            </div>
-          </DragDropContext>
           {this.preqs.map((preq) =>
               <Xarrow start={`drag-${preq[0]}`}
                       end={`drag-${preq[1]}`}/>)}
+          <DragDropContext onDragEnd={this.onDragEnd}>
+            <Grid id='progress-view' columns={this.numSems} divided>
+              <Grid.Row>
+                {this.semesters.map((sem) =>
+                    <div>
+                      <Droppable droppableId={`drop${this.semesters.indexOf(sem)}`}>
+                        {(provided, snapshot) => (
+                            <div>
+                              <div className='semester-info'>
+                              {this.semNames[this.semesters.indexOf(sem)]}
+                              </div>
+                              <Grid.Column className='semester'>
+                                <div ref={provided.innerRef}
+                                     style={getListStyle(snapshot.isDraggingOver)}>
+                                  {sem.map((num, index) =>
+                                      <Draggable
+                                          key={`${this.semesters.indexOf(sem)}-${num}`}
+                                          draggableId={`drag-${num}`}
+                                          index={index}>
+                                        {(provided, snapshot) => (
+                                            <div id={`drag-${num}`}
+                                                 ref={provided.innerRef}
+                                                 {...provided.draggableProps}
+                                                 {...provided.dragHandleProps}
+                                                 style={getItemStyle(
+                                                     snapshot.isDragging,
+                                                     provided.draggableProps.style,
+                                                 )}>
+                                              ICS {num}
+                                            </div>
+                                        )}
+                                      </Draggable>)}
+                                  {provided.placeholder}
+                                </div>
+                              </Grid.Column>
+                            </div>)}
+                      </Droppable>
+                    </div>)}
+              </Grid.Row>
+            </Grid>
+          </DragDropContext>
         </div>
     );
   }
