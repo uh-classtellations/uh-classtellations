@@ -76,17 +76,46 @@ const getListStyle = isDraggingOver => ({
 
 const defSems = (count) => {
   const result = new Array(count);
-  for (let i = 0; i < count;
-       i++
-  ) {
+  for (let i = 0; i < count; i++) {
     result[i] = [];
   }
   return result;
 };
 
-const semesters = defSems(10);
+const numSems = 10;
 
 class Progress extends React.Component {
+
+  userId = Meteor.userId();
+  // owner = this.users.findOne({id_: this.userId });
+
+  semesters = defSems(numSems);
+
+  owner = null;
+
+  refreshSems = () => {
+    while (this.semesters.length > 0) this.semesters.pop();
+    this.semesters = defSems(numSems);
+    this.props.courses.map((course) => this.semesters[course.semester].push(course.num));
+    // const sem = course.semester;
+    // const num = course.num;
+    // console.log(`${sem} length ${semesters[sem].length}`);
+    // if (semesters[sem].length === 0) {
+    //   console.log('m');
+    //   semesters.push([num]);
+    // } else {
+    //   console.log('p');
+    //   semesters[sem].push(num);
+    // }
+    // });
+    console.log(this.semesters);
+    this.semesters.map((sem) => sem.map((num) => console.log(`${this.semesters.indexOf(sem)}, ${num}`)));
+  }
+
+  componentDidMount() {
+    this.refreshSems();
+    console.log(this.userId);
+  }
 
   // state = {
   //   // items: getItems(10),
@@ -105,7 +134,6 @@ class Progress extends React.Component {
 
   onDragEnd = (result) => {
     const { source, destination } = result;
-
 
     // dropped outside the list
     if (!destination) {
@@ -127,13 +155,20 @@ class Progress extends React.Component {
       //   this.setState(state);
     } else {
 
-      let sDropID = source.droppableId.toString();
-      let sSemPos = sDropID.substring(sDropID.length - 1);
+      const sDropID = source.droppableId.toString();
+      const sSemPos = sDropID.substring(sDropID.length - 1);
 
-      let c = semesters[0][source.index];
-      console.log(c);
+      const num = this.semesters[0][source.index];
+      console.log(num);
 
       console.log(sSemPos);
+
+      const dDropID = destination.droppableId.toString();
+      const dSemPos = dDropID.substring(sDropID.length - 1);
+
+      Courses.collection.remove({ semester: sSemPos, num: num });
+      Courses.collection.insert({ semester: dSemPos, num: num });
+
       // let semPos = sDropID.substring(sDropID.length() - 1);
       // Semesters.collection.update({ $pull: { semCourses: source.num } });
       // Semesters.collection.update({ $push: { semCourses: source.num } });
@@ -146,11 +181,21 @@ class Progress extends React.Component {
       // this.setState({
       //   items: result.droppable,
       //   selected: result.droppable2
-      // });
+      // })
     }
   };
 
   render() {
+
+    //
+    // this.props.courses.map((c) => {
+    //   if (this.owner == null) {
+    //     this.owner = c.owner;
+    //   }
+    //   console.log('11' + c);
+    // });
+
+    // console.log('111' + this.owner);
 
     // console.log(Array.from(this.props.courses.map((course) => ({ a: course.num, b: course._id }))));
     // console.log(this.props.courses);
@@ -158,36 +203,23 @@ class Progress extends React.Component {
 
     // const id2List = Array.from(this.props.sems.map((sem) => ({ `droppable${sem.semester}`: `sem${semester}` })));
     // );
-    console.log('9' + semesters);
-    this.props.courses.map((course) => semesters[course.semester].push(course.num));
-    // const sem = course.semester;
-    // const num = course.num;
-    // console.log(`${sem} length ${semesters[sem].length}`);
-    // if (semesters[sem].length === 0) {
-    //   console.log('m');
-    //   semesters.push([num]);
-    // } else {
-    //   console.log('p');
-    //   semesters[sem].push(num);
-    // }
-    // });
-    console.log(semesters);
-    semesters.map((sem) => sem.map((num) => console.log(`${semesters.indexOf(sem)}, ${num}`)));
+
+    this.refreshSems();
 
     return (
         <div className='landing-background'>
           <DragDropContext onDragEnd={this.onDragEnd}>
             <Grid className='progress-view'>
-              {semesters.map((sem) =>
+              {this.semesters.map((sem) =>
                   <Grid.Column className='semester'>
-                    <Droppable droppableId={`drop${semesters.indexOf(sem)}`}>
+                    <Droppable droppableId={`drop${this.semesters.indexOf(sem)}`}>
                       {(provided, snapshot) => (
                           <div ref={provided.innerRef}
                                style={getListStyle(snapshot.isDraggingOver)}>
                             {sem.map((num, index) =>
                                 (<Draggable
-                                    key={`${semesters.indexOf(sem)}-${num}`}
-                                    draggableId={`drag${semesters.indexOf(sem)}-${num}`}
+                                    key={`${this.semesters.indexOf(sem)}-${num}`}
+                                    draggableId={`drag${this.semesters.indexOf(sem)}-${num}`}
                                     index={index}>
                                   {(provided, snapshot) => (
                                       <div
