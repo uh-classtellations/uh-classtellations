@@ -33,6 +33,7 @@ function createUser(email, password, role) {
     const sem = defaultProgress[i][0];
     const num = defaultProgress[i][1];
     let c = 3;
+    // Default semester for completion: Fall 2020
     let status = 'Upcoming';
     if (sem < 5) status = 'Completed';
     if (fourCreds.includes(num)) c = 4;
