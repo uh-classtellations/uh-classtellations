@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 
 import { Courses } from '../../api/course/Course';
-import { Semesters } from '../../api/semester/Semester';
+// import { Semesters } from '../../api/semester/Semester';
 
 // fake data generator
 const getItems = (count, offset = 0) =>
@@ -72,6 +72,16 @@ const getListStyle = isDraggingOver => ({
   width: 250
 });
 
+const defSems = (count) => {
+  const result = new Array(count);
+  for (let i = 0; i < count;
+       i++
+  ) {
+    result[i] = [];
+  }
+  return result;
+};
+
 class Progress extends React.Component {
 
   // state = {
@@ -112,8 +122,8 @@ class Progress extends React.Component {
       //   this.setState(state);
     } else {
       // TODO to be specific to owner
-      Semesters.collection.update({ $pull: { semCourses: source.num } });
-      Semesters.collection.update({ $push: { semCourses: source.num } });
+      // Semesters.collection.update({ $pull: { semCourses: source.num } });
+      // Semesters.collection.update({ $push: { semCourses: source.num } });
       // const result = move(
       //     this.getList(source.droppableId),
       //     this.getList(destination.droppableId),
@@ -129,86 +139,54 @@ class Progress extends React.Component {
 
   render() {
 
-    console.log(Array.from(this.props.courses.map((course) => ({ a: course.num, b: course._id }))));
-    console.log(this.props.courses);
+    // console.log(Array.from(this.props.courses.map((course) => ({ a: course.num, b: course._id }))));
+    // console.log(this.props.courses);
+    // console.log(this.props.sems);
 
     // const id2List = Array.from(this.props.sems.map((sem) => ({ `droppable${sem.semester}`: `sem${semester}` })));
     // );
+    const semesters = defSems(10);
+    console.log('9' + semesters);
+    this.props.courses.map((course) => semesters[course.semester].push(course.num));
+    // const sem = course.semester;
+    // const num = course.num;
+    // console.log(`${sem} length ${semesters[sem].length}`);
+    // if (semesters[sem].length === 0) {
+    //   console.log('m');
+    //   semesters.push([num]);
+    // } else {
+    //   console.log('p');
+    //   semesters[sem].push(num);
+    // }
+    // });
+    console.log(semesters);
+    semesters.map((sem) => sem.map((num) => console.log(`${semesters.indexOf(sem)}, ${num}`)));
 
     return (
         <div className='landing-background'>
           <DragDropContext onDragEnd={this.onDragEnd}>
-            <Droppable droppableId="droppable">
-              {(provided, snapshot) => (
-                  <div
-                      ref={provided.innerRef}
-                      style={getListStyle(snapshot.isDraggingOver)}>
-                    {this.props.courses.map((item, index) => (
-                        <Draggable
-                            key={item._id}
-                            draggableId={item._id}
-                            index={index}
-                            num={item.num}
-                        >
-                          {(provided, snapshot) => (
-                              <div
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                  style={getItemStyle(
-                                      snapshot.isDragging,
-                                      provided.draggableProps.style
-                                  )}>
-                                {item.num}
-                              </div>
-                          )}
-                        </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </div>
-              )}
-            </Droppable>
-            {/*<Droppable droppableId="droppable2">*/}
-            {/*  {(provided, snapshot) => (*/}
-            {/*      <div*/}
-            {/*          ref={provided.innerRef}*/}
-            {/*          style={getListStyle(snapshot.isDraggingOver)}>*/}
-            {/*        {this.props.courses.map((item, index) => (*/}
-            {/*            <Draggable*/}
-            {/*                key={item._id}*/}
-            {/*                draggableId={item._id}*/}
-            {/*                index={index}>*/}
-            {/*              {(provided, snapshot) => (*/}
-            {/*                  <div*/}
-            {/*                      ref={provided.innerRef}*/}
-            {/*                      {...provided.draggableProps}*/}
-            {/*                      {...provided.dragHandleProps}*/}
-            {/*                      style={getItemStyle(*/}
-            {/*                          snapshot.isDragging,*/}
-            {/*                          provided.draggableProps.style*/}
-            {/*                      )}>*/}
-            {/*                    {item.num}*/}
-            {/*                  </div>*/}
-            {/*              )}*/}
-            {/*            </Draggable>*/}
-            {/*        ))}*/}
-            {/*        {provided.placeholder}*/}
-            {/*      </div>*/}
-            {/*  )}*/}
-            {/*</Droppable>*/}
-            {/*{this.props.courses.map((course) => <ProgCourse key={course._id} course={course} Courses={Courses}/>)}*/}
+            <div>{semesters.map((sem) =>
+                <div className='semester'>
+                  {sem.map((num) => <div className='prog-course'>
+                    {semesters.indexOf(sem)} for {num}
+                  </div>)}
+                </div>)}
+            </div>
           </DragDropContext>
         </div>
-
     );
   }
 }
 
+// function Semesters() {
+//   const sems = useState(0);
+// }
+
 Progress.propTypes = {
   courses: PropTypes.array.isRequired,
   Courses: PropTypes.object.isRequired,
-  sems: PropTypes.array.isRequired,
-  Sems: PropTypes.object.isRequired,
+  // sems: PropTypes.array.isRequired,
+  // Sems: PropTypes.object.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
@@ -217,7 +195,7 @@ export default withTracker(() => {
   const s1 = Meteor.subscribe(Courses.userPublicationName);
   return {
     courses: Courses.collection.find({}).fetch(),
-    sems: Semesters.collection.find({}).fetch(),
+    // sems: Semesters.collection.find({}).fetch(),
     ready: s1.ready(),
   };
 })(Progress);

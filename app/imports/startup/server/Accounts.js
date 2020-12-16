@@ -7,7 +7,7 @@ import { Semesters } from '../../api/semester/Semester';
 
 /* eslint-disable no-console */
 
-const defaultProgress = [[0, 111], [0, 141], [1, 211], [1, 241]];
+const defaultProgress = [[0, 111], [0, 141], [1, 211], [1, 241], [2, 212], [2, 311]];
 
 function createUser(email, password, role) {
 
@@ -49,6 +49,7 @@ function createUser(email, password, role) {
           });
     }
   }
+  console.log('zz' + Semesters.collection.find().semester);
   // console.log(Semesters.collection.find());
 }
 
