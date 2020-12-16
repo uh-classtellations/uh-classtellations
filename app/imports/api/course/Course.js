@@ -9,6 +9,8 @@ class CoursesCollection {
     this.name = 'CoursesCollection';
     // Define the Mongo collection.
     this.collection = new Mongo.Collection(this.name);
+
+
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
       semester: Number,
@@ -24,6 +26,16 @@ class CoursesCollection {
     // Define names for publications and subscriptions
     this.userPublicationName = `${this.name}.publication.user`;
     // this.adminPublicationName = `${this.name}.publication.admin`;
+    // this.collection.allow({
+    //   insert() {
+    //     // return userId && doc.owner === userId;
+    //     return true;
+    //   },
+    //   remove() {
+    //     // return doc.owner === userId;
+    //     return true;
+    //   },
+    // });
   }
 }
 

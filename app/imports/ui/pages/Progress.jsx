@@ -51,15 +51,15 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   return result;
 };
 
-const grid = 5;
+const grid = 1;
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: 'none',
   padding: grid * 2,
   margin: `0 0 ${grid}px 0`,
-  width: '80px',
-  height: '60px',
+  width: 80,
+  height: 80,
 
   // change background colour if dragging
   background: isDragging ? 'lightgreen' : 'grey',
@@ -71,7 +71,8 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? 'lightblue' : 'lightgrey',
   padding: grid,
-  width: 250,
+  width: 90,
+  height: 500,
 });
 
 const defSems = (count) => {
@@ -86,17 +87,38 @@ const numSems = 10;
 
 class Progress extends React.Component {
 
+  // componentDidMount() {
+  //
+  // this.refreshSems();
+  //   console.log('1111');
+  //
+  //   this.props.courses.map((c) => console.log('---' + c));
+  // }
+
   userId = Meteor.userId();
   // owner = this.users.findOne({id_: this.userId });
 
   semesters = defSems(numSems);
 
+  keyToId = new Map();
+
   owner = null;
 
-  refreshSems = () => {
+  componentDidMount() {
+  }
+
+  keyForSemAndNum = (sem, num) => (`${sem}-${num}`);
+
+  refreshSemsAndIds = () => {
     while (this.semesters.length > 0) this.semesters.pop();
+    while (this.keyToId.length > 0) this.ids.pop();
     this.semesters = defSems(numSems);
-    this.props.courses.map((course) => this.semesters[course.semester].push(course.num));
+    this.props.courses.map((course) => {
+      this.semesters[course.semester].push(course.num);
+      this.keyToId.set(
+        this.keyForSemAndNum(course.semester, course.num),
+        course._id);
+    });
     // const sem = course.semester;
     // const num = course.num;
     // console.log(`${sem} length ${semesters[sem].length}`);
@@ -110,11 +132,6 @@ class Progress extends React.Component {
     // });
     console.log(this.semesters);
     this.semesters.map((sem) => sem.map((num) => console.log(`${this.semesters.indexOf(sem)}, ${num}`)));
-  }
-
-  componentDidMount() {
-    this.refreshSems();
-    console.log(this.userId);
   }
 
   // state = {
@@ -158,16 +175,31 @@ class Progress extends React.Component {
       const sDropID = source.droppableId.toString();
       const sSemPos = sDropID.substring(sDropID.length - 1);
 
-      const num = this.semesters[0][source.index];
+      const num = this.semesters[sSemPos][source.index];
       console.log(num);
-
       console.log(sSemPos);
 
       const dDropID = destination.droppableId.toString();
       const dSemPos = dDropID.substring(sDropID.length - 1);
+      // const toRemove = Courses.collection.findOne({
+      //   $and: [
+      //     { semester: sSemPos },
+      //     { num: num },
+      //     { owner: this.owner },
+      //   ],
+      // });
+      // console.log(toRemove);
+      // Courses.collection.remove({ _id: toRemove._id });
+      //
+      // Courses.collection.update(_id, { $set: {}})
+      const theId = this.keyToId.get(this.keyForSemAndNum(sSemPos, num));
 
-      Courses.collection.remove({ semester: sSemPos, num: num });
-      Courses.collection.insert({ semester: dSemPos, num: num });
+      Courses.collection.update({ _id: theId }, { $set: { semester: dSemPos } });
+
+      // Courses.collection.remove({ semester: sSemPos, num: num, credits: 3, status: '--', grade: '--', owner: this.owner });
+      // Courses.collection.remove({ semester: sSemPos, num: num, _id: Meteor.userId() });
+      // Courses.collection.remove({ semester: sSemPos, num: num, owner: this.owner });
+      // Courses.collection.insert({ semester: dSemPos, num: num, credits: 3, status: '--', grade: '--', owner: this.owner });
 
       // let semPos = sDropID.substring(sDropID.length() - 1);
       // Semesters.collection.update({ $pull: { semCourses: source.num } });
@@ -186,6 +218,11 @@ class Progress extends React.Component {
   };
 
   render() {
+    this.props.courses.map((c) => {
+      if (this.owner == null) {
+        this.owner = c.owner;
+      }
+    });
 
     //
     // this.props.courses.map((c) => {
@@ -204,7 +241,7 @@ class Progress extends React.Component {
     // const id2List = Array.from(this.props.sems.map((sem) => ({ `droppable${sem.semester}`: `sem${semester}` })));
     // );
 
-    this.refreshSems();
+    this.refreshSemsAndIds();
 
     return (
         <div className='landing-background'>
@@ -253,6 +290,8 @@ class Progress extends React.Component {
 Progress.propTypes = {
   courses: PropTypes.array.isRequired,
   Courses: PropTypes.object.isRequired,
+  // users: PropTypes.array.isRequired,
+  // Users: PropTypes.object.isRequired,
   // sems: PropTypes.array.isRequired,
   // Sems: PropTypes.object.isRequired,
   ready: PropTypes.bool.isRequired,

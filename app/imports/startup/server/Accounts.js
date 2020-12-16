@@ -9,6 +9,10 @@ import { Semesters } from '../../api/semester/Semester';
 
 const defaultProgress = [[0, 111], [0, 141], [1, 211], [1, 241], [2, 212], [2, 311]];
 
+// function foo() {
+//   console.log('foo');
+// }
+
 function createUser(email, password, role) {
 
   console.log(`  Creating user ${email}.`);
