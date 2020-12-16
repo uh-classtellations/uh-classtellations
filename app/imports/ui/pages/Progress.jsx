@@ -8,13 +8,13 @@ import html2canvas from 'html2canvas';
 import ReactDOM from 'react-dom';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-import ProgCourse from '../components/ProgCourse';
-
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 
 import Xarrow from 'react-xarrows';
+
+import swal from 'sweetalert';
 
 import { Courses } from '../../api/course/Course';
 // import { Semesters } from '../../api/semester/Semester';
@@ -52,7 +52,7 @@ import { Courses } from '../../api/course/Course';
 //   return result;
 // };
 
-const grid = 1;
+const grid = 5;
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
@@ -60,20 +60,21 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   padding: grid * 2,
   margin: `0 0 ${grid}px 0`,
 
-  background: (250, 250, 250, 0.7),
+  background: 'rgba(250, 250, 250, 0.7)',
   borderRadius: 3,
   width: 80,
   height: 40,
 
   // change background colour if dragging
-  background: isDragging ? 'lightgreen' : 'grey',
+  // background: isDragging ? 'lightgreen' : 'grey',
 
   // styles we need to apply on draggables
   ...draggableStyle,
 });
 
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey',
+  background: isDraggingOver ? 'rgba(175, 215, 250, 0.5)' : 'rgba(250, 250, 250, 0.2)',
+  justifyContent: 'space-evenly',
   padding: grid,
   width: 90,
   height: 500,
@@ -108,12 +109,20 @@ class Progress extends React.Component {
 
   owner = null;
 
+  preqs = [
+    [111, 211],
+    [141, 241],
+    [211, 212],
+    [211, 311],
+    [241, 311],
+  ]
+
   componentDidMount() {
   }
 
   keyForSemAndNum = (sem, num) => (`${sem}-${num}`);
 
-  refreshSemsAndIds = () => {
+  refreshSupportData = () => {
     while (this.semesters.length > 0) this.semesters.pop();
     while (this.keyToId.length > 0) this.ids.pop();
     this.semesters = defSems(numSems);
@@ -152,6 +161,22 @@ class Progress extends React.Component {
   // };
 
   getList = id => this.state[this.id2List[id]];
+
+  maxPreqSem = num => {
+    let result = -1;
+    this.preqs.map((preq) => {
+      if (preq[1] === num) {
+        // find the semester of the preq
+        this.semesters.map((sem) => {
+          if (sem.includes(preq[0])
+              && this.semesters.indexOf(sem) > result) {
+            result = this.semesters.indexOf(sem);
+          }
+        });
+      }
+    });
+    return result;
+  }
 
   onDragEnd = (result) => {
     const { source, destination } = result;
@@ -196,6 +221,12 @@ class Progress extends React.Component {
       // Courses.collection.remove({ _id: toRemove._id });
       //
       // Courses.collection.update(_id, { $set: {}})
+      // if the latest preq is the desination or later, alert and abort
+      if (this.maxPreqSem(num) >= dSemPos) {
+        swal('Prerequisite Error', 'Prerequisites not met for this timeline');
+        return;
+      }
+
       const theId = this.keyToId.get(this.keyForSemAndNum(sSemPos, num));
 
       Courses.collection.update({ _id: theId }, { $set: { semester: dSemPos } });
@@ -245,7 +276,7 @@ class Progress extends React.Component {
     // const id2List = Array.from(this.props.sems.map((sem) => ({ `droppable${sem.semester}`: `sem${semester}` })));
     // );
 
-    this.refreshSemsAndIds();
+    this.refreshSupportData();
 
     return (
         <div className='landing-background'>
@@ -264,13 +295,13 @@ class Progress extends React.Component {
                                     index={index}>
                                   {(provided, snapshot) => (
                                       <div id={`drag-${num}`}
-                                          ref={provided.innerRef}
-                                          {...provided.draggableProps}
-                                          {...provided.dragHandleProps}
-                                          style={getItemStyle(
-                                              snapshot.isDragging,
-                                              provided.draggableProps.style,
-                                          )}>
+                                           ref={provided.innerRef}
+                                           {...provided.draggableProps}
+                                           {...provided.dragHandleProps}
+                                           style={getItemStyle(
+                                               snapshot.isDragging,
+                                               provided.draggableProps.style,
+                                           )}>
                                         ICS {num}
                                       </div>
                                   )}
@@ -282,32 +313,51 @@ class Progress extends React.Component {
                   </Grid.Column>)}
             </Grid>
           </DragDropContext>
-          <Xarrow start='drag-111' end='drag-311'/>
+          {this.preqs.map((preq) => <Xarrow start={`drag-${preq[0]}`}
+                                            end={`drag-${preq[1]}`}/>)}
         </div>
     );
   }
+
 }
 
 // function Semesters() {
 //   const sems = useState(0);
 // }
 
-Progress.propTypes = {
-  courses: PropTypes.array.isRequired,
-  Courses: PropTypes.object.isRequired,
-  // users: PropTypes.array.isRequired,
-  // Users: PropTypes.object.isRequired,
-  // sems: PropTypes.array.isRequired,
-  // Sems: PropTypes.object.isRequired,
-  ready: PropTypes.bool.isRequired,
-};
-
-export default withTracker(() => {
-  // Get access to Stuff documents.
-  const s1 = Meteor.subscribe(Courses.userPublicationName);
-  return {
-    courses: Courses.collection.find({}).fetch(),
-    // sems: Semesters.collection.find({}).fetch(),
-    ready: s1.ready(),
+  Progress
+.
+  propTypes = {
+    courses: PropTypes.array.isRequired,
+    Courses: PropTypes.object.isRequired,
+    // users: PropTypes.array.isRequired,
+    // Users: PropTypes.object.isRequired,
+    // sems: PropTypes.array.isRequired,
+    // Sems: PropTypes.object.isRequired,
+    ready: PropTypes.bool.isRequired,
   };
-})(Progress);
+
+  export
+  default
+
+  withTracker(
+
+() => {
+  // Get access to Stuff documents.
+  const
+  s1 = Meteor.subscribe(Courses.userPublicationName);
+  return {
+  courses: Courses.collection.find
+( {
+}
+
+).
+fetch(),
+    // sems: Semesters.collection.find({}).fetch(),
+    ready
+:
+s1.ready(),
+}
+;
+})
+(Progress);
