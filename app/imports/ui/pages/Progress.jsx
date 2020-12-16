@@ -19,20 +19,20 @@ import { Courses } from '../../api/course/Course';
 // import { Semesters } from '../../api/semester/Semester';
 
 // fake data generator
-const getItems = (count, offset = 0) =>
-    Array.from({ length: count }, (v, k) => k).map(k => ({
-      id: `item-${k + offset}`,
-      content: `item ${k + offset}`
-    }));
-
-// a little function to help us with reordering the result
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
+// const getItems = (count, offset = 0) =>
+//     Array.from({ length: count }, (v, k) => k).map(k => ({
+//       id: `item-${k + offset}`,
+//       content: `item ${k + offset}`
+//     }));
+//
+// // a little function to help us with reordering the result
+// const reorder = (list, startIndex, endIndex) => {
+//   const result = Array.from(list);
+//   const [removed] = result.splice(startIndex, 1);
+//   result.splice(endIndex, 0, removed);
+//
+//   return result;
+// };
 
 /**
  * Moves an item from one list to another list.
@@ -173,7 +173,7 @@ class Progress extends React.Component {
                           <div ref={provided.innerRef}
                                style={getListStyle(snapshot.isDraggingOver)}>
                             {sem.map((num, index) =>
-                                <Draggable
+                                (<Draggable
                                     key={`${semesters.indexOf(sem)}-${num}`}
                                     draggableId={`drag${semesters.indexOf(sem)}-${num}`}
                                     index={index}>
@@ -181,7 +181,7 @@ class Progress extends React.Component {
                                       <div
                                           ref={provided.innerRef}
                                           {...provided.draggableProps}
-                                          {...provided.dragHandlProps}
+                                          {...provided.dragHandleProps}
                                           style={getItemStyle(
                                               snapshot.isDragging,
                                               provided.draggableProps.style,
@@ -189,7 +189,7 @@ class Progress extends React.Component {
                                         ICS {num}
                                       </div>
                                   )}
-                                </Draggable>
+                                </Draggable>)
                             )}
                             {provided.placeholder}
                           </div>)}
