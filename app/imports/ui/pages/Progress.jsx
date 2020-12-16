@@ -14,6 +14,7 @@ import ProgCourse from '../components/ProgCourse';
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
+
 import { Courses } from '../../api/course/Course';
 import { Semesters } from '../../api/semester/Semester';
 
@@ -86,7 +87,6 @@ class Progress extends React.Component {
   //   droppable2: 'selected',
   // };
 
-
   getList = id => this.state[this.id2List[id]];
 
   onDragEnd = result => {
@@ -94,30 +94,31 @@ class Progress extends React.Component {
 
     // dropped outside the list
     if (!destination) {
-      return;
-    }
+      // return;
 
-    if (source.droppableId === destination.droppableId) {
-      const items = reorder(
-          this.getList(source.droppableId),
-          source.index,
-          destination.index,
-      );
-
-      let state = { items };
-
-      if (source.droppableId === 'droppable2') {
-        state = { selected: items };
-      }
-
-      this.setState(state);
+      // if (source.droppableId === destination.droppableId) {
+      //   const items = reorder(
+      //       this.getList(source.droppableId),
+      //       source.index,
+      //       destination.index,
+      //   );
+      //
+      //   let state = { items };
+      //
+      //   if (source.droppableId === 'droppable2') {
+      //     state = { selected: items };
+      //   }
+      //
+      //   this.setState(state);
     } else {
-      const result = move(
-          this.getList(source.droppableId),
-          this.getList(destination.droppableId),
-          source,
-          destination
-      );
+      // TODO to be specific to owner
+      Semesters.collection.update({ $pull: { semCourses: source.num } });
+      Semesters.collection.update({ $push: { semCourses: source.num } });
+      // const result = move(
+      //     this.getList(source.droppableId),
+      //     this.getList(destination.droppableId),
+      //     source,
+      //     destination
 
       this.setState({
         items: result.droppable,
@@ -130,7 +131,6 @@ class Progress extends React.Component {
 
     console.log(Array.from(this.props.courses.map((course) => ({ a: course.num, b: course._id }))));
     console.log(this.props.courses);
-
 
     // const id2List = Array.from(this.props.sems.map((sem) => ({ `droppable${sem.semester}`: `sem${semester}` })));
     // );
@@ -147,7 +147,9 @@ class Progress extends React.Component {
                         <Draggable
                             key={item._id}
                             draggableId={item._id}
-                            index={index}>
+                            index={index}
+                            num={item.num}
+                        >
                           {(provided, snapshot) => (
                               <div
                                   ref={provided.innerRef}
@@ -212,10 +214,10 @@ Progress.propTypes = {
 
 export default withTracker(() => {
   // Get access to Stuff documents.
-  const subscription = Meteor.subscribe(Courses.userPublicationName);
+  const s1 = Meteor.subscribe(Courses.userPublicationName);
   return {
     courses: Courses.collection.find({}).fetch(),
     sems: Semesters.collection.find({}).fetch(),
-    ready: subscription.ready(),
+    ready: s1.ready(),
   };
 })(Progress);

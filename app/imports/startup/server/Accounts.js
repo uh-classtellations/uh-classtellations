@@ -10,6 +10,7 @@ import { Semesters } from '../../api/semester/Semester';
 const defaultProgress = [[0, 111], [0, 141], [1, 211], [1, 241]];
 
 function createUser(email, password, role) {
+
   console.log(`  Creating user ${email}.`);
   const userID = Accounts.createUser({
     username: email,
@@ -23,8 +24,14 @@ function createUser(email, password, role) {
   for (let i = 0; i < defaultProgress.length; i++) {
     const s = defaultProgress[i][0];
     const n = defaultProgress[i][1];
-    Courses.collection.insert({ semester: s, num: n, credits: 3, status: '--', grade: '--', owner: email });
-    // console.log(`Inserted ${n} at ${s} for ${email}`);
+    Courses.collection.insert({ semester: s, num: n, credits: 3, status: '--', grade: '--', owner: email },
+        (error) => {
+          if (error) {
+            console.log('Course init failed');
+          } else {
+            console.log(`Inserted ${n} at ${s} for ${email}`);
+          }
+        });
     const temp = Semesters.collection.find({ semester: s, owner: email }).count();
     console.log('tt' + temp);
     if (temp > 0) {
@@ -32,7 +39,14 @@ function createUser(email, password, role) {
       console.log(`Inserted ${n} into sem ${s}`);
     } else {
       console.log(`Creating semester with ${n} into sem ${s}`);
-      Semesters.collection.insert({ semester: s, semCourses: n, owner: email });
+      Semesters.collection.insert({ semester: s, semCourses: [n], owner: email },
+          (error) => {
+            if (error) {
+              console.log('Failed to create semester');
+            } else {
+              console.log(`Created semeseter ${s} with ${n}`);
+            }
+          });
     }
   }
   // console.log(Semesters.collection.find());
