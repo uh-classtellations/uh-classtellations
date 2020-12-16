@@ -9,8 +9,6 @@ import { Courses } from '../../api/course/Course';
 import CourseItem from '../components/CourseItem';
 import AddCourse from '../components/AddCourse';
 
-
-
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class Transcript extends React.Component {
 
@@ -43,7 +41,7 @@ class Transcript extends React.Component {
                   <Table.HeaderCell>Course</Table.HeaderCell>
                   <Table.HeaderCell>Credits</Table.HeaderCell>
                   <Table.HeaderCell>Status</Table.HeaderCell>
-                  <Table.HeaderCell>Grade</Table.HeaderCell>
+                  {/* <Table.HeaderCell>Grade</Table.HeaderCell> */}
                   <Table.HeaderCell>Reset</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>

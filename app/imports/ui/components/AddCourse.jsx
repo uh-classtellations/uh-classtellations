@@ -16,17 +16,15 @@ const formSchema = new SimpleSchema({
   },
   num: {
     type: Number,
-    defaultValue: 'ICS 111',
   },
   credits: {
     type: Number,
     allowedValues: [1, 2, 3, 4],
-    defaultValue: '3',
   },
   status: {
     type: String,
-    allowedValues: ['In Progress', 'Complete', 'Withdrew'],
-    defaultValue: 'In Progress',
+    allowedValues: ['Completed', 'Upcoming'],
+    defaultValue: 'Upcoming',
   },
   grade: {
     type: String,
@@ -77,7 +75,7 @@ class AddCourse extends React.Component {
                 <NumField id='num' name='num'/>
                 <SelectField id='credits' name='credits'/>
                 <SelectField id='status' name='status'/>
-                <SelectField id='grade' name='grade'/>
+                {/* <SelectField id='grade' name='grade'/> */}
                 <SubmitField id='submit' value='Submit'/>
                 <ErrorsField/>
               </Segment>
