@@ -63,13 +63,13 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   background: isDragging ? 'lightgreen' : 'grey',
 
   // styles we need to apply on draggables
-  ...draggableStyle
+  ...draggableStyle,
 });
 
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? 'lightblue' : 'lightgrey',
   padding: grid,
-  width: 250
+  width: 250,
 });
 
 const defSems = (count) => {
@@ -130,10 +130,10 @@ class Progress extends React.Component {
       //     source,
       //     destination
 
-      this.setState({
-        items: result.droppable,
-        selected: result.droppable2
-      });
+      // this.setState({
+      //   items: result.droppable,
+      //   selected: result.droppable2
+      // });
     }
   };
 
@@ -167,11 +167,34 @@ class Progress extends React.Component {
           <DragDropContext onDragEnd={this.onDragEnd}>
             <Grid>
               {semesters.map((sem) =>
-                <Grid.Column className='semester'>
-                  {sem.map((num) => <div className='prog-course'>
-                    ICS {num}
-                  </div>)}
-                </Grid.Column>)}
+                  <Grid.Column className='semester'>
+                    <Droppable droppableId={`drop${semesters.indexOf(sem)}`}>
+                      {(provided, snapshot) => (
+                          <div ref={provided.innerRef}
+                               style={getListStyle(snapshot.isDraggingOver)}>
+                            {sem.map((num, index) =>
+                                <Draggable
+                                    key={`${semesters.indexOf(sem)}-${num}`}
+                                    draggableId={`drag${semesters.indexOf(sem)}-${num}`}
+                                    index={index}>
+                                  {(provided, snapshot) => (
+                                      <div
+                                          ref={provided.innerRef}
+                                          {...provided.draggableProps}
+                                          {...provided.dragHandlProps}
+                                          style={getItemStyle(
+                                              snapshot.isDragging,
+                                              provided.draggableProps.style,
+                                          )}>
+                                        ICS {num}
+                                      </div>
+                                  )}
+                                </Draggable>
+                            )}
+                            {provided.placeholder}
+                          </div>)}
+                    </Droppable>
+                  </Grid.Column>)}
             </Grid>
           </DragDropContext>
         </div>
