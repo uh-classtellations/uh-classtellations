@@ -1,8 +1,7 @@
 // Drag and drop made referencing https://codesandbox.io/s/ql08j35j3q?file=/index.js:2606-2614
 
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useRef } from 'react';
 import { Grid } from 'semantic-ui-react';
-import Board, { moveCard } from '@lourenci/react-kanban';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -14,6 +13,8 @@ import ProgCourse from '../components/ProgCourse';
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
+
+import Xarrow from 'react-xarrows';
 
 import { Courses } from '../../api/course/Course';
 // import { Semesters } from '../../api/semester/Semester';
@@ -37,19 +38,19 @@ import { Courses } from '../../api/course/Course';
 /**
  * Moves an item from one list to another list.
  */
-const move = (source, destination, droppableSource, droppableDestination) => {
-  const sourceClone = Array.from(source);
-  const destClone = Array.from(destination);
-  const [removed] = sourceClone.splice(droppableSource.index, 1);
-
-  destClone.splice(droppableDestination.index, 0, removed);
-
-  const result = {};
-  result[droppableSource.droppableId] = sourceClone;
-  result[droppableDestination.droppableId] = destClone;
-
-  return result;
-};
+// const move = (source, destination, droppableSource, droppableDestination) => {
+//   const sourceClone = Array.from(source);
+//   const destClone = Array.from(destination);
+//   const [removed] = sourceClone.splice(droppableSource.index, 1);
+//
+//   destClone.splice(droppableDestination.index, 0, removed);
+//
+//   const result = {};
+//   result[droppableSource.droppableId] = sourceClone;
+//   result[droppableDestination.droppableId] = destClone;
+//
+//   return result;
+// };
 
 const grid = 1;
 
@@ -58,8 +59,11 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   userSelect: 'none',
   padding: grid * 2,
   margin: `0 0 ${grid}px 0`,
+
+  background: (250, 250, 250, 0.7),
+  borderRadius: 3,
   width: 80,
-  height: 80,
+  height: 40,
 
   // change background colour if dragging
   background: isDragging ? 'lightgreen' : 'grey',
@@ -116,8 +120,8 @@ class Progress extends React.Component {
     this.props.courses.map((course) => {
       this.semesters[course.semester].push(course.num);
       this.keyToId.set(
-        this.keyForSemAndNum(course.semester, course.num),
-        course._id);
+          this.keyForSemAndNum(course.semester, course.num),
+          course._id);
     });
     // const sem = course.semester;
     // const num = course.num;
@@ -254,12 +258,12 @@ class Progress extends React.Component {
                           <div ref={provided.innerRef}
                                style={getListStyle(snapshot.isDraggingOver)}>
                             {sem.map((num, index) =>
-                                (<Draggable
+                                <Draggable
                                     key={`${this.semesters.indexOf(sem)}-${num}`}
-                                    draggableId={`drag${this.semesters.indexOf(sem)}-${num}`}
+                                    draggableId={`drag-${num}`}
                                     index={index}>
                                   {(provided, snapshot) => (
-                                      <div
+                                      <div id={`drag-${num}`}
                                           ref={provided.innerRef}
                                           {...provided.draggableProps}
                                           {...provided.dragHandleProps}
@@ -270,7 +274,7 @@ class Progress extends React.Component {
                                         ICS {num}
                                       </div>
                                   )}
-                                </Draggable>)
+                                </Draggable>
                             )}
                             {provided.placeholder}
                           </div>)}
@@ -278,6 +282,7 @@ class Progress extends React.Component {
                   </Grid.Column>)}
             </Grid>
           </DragDropContext>
+          <Xarrow start='drag-111' end='drag-311'/>
         </div>
     );
   }
