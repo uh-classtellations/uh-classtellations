@@ -4,10 +4,9 @@ class AddCourseComponent {
 
   /** Adds new course */
   async addCourse(testController) {
-    const year = '2020';
-    // Define the new course year--Use default form values.
-    await testController.typeText('#year', year);
-
+    const courseNum = '461';
+    // Define the new course information.
+    await testController.typeText('#num', courseNum);
     await testController.click('#submit');
     await testController.click(Selector('.swal-button--confirm'));
   }
