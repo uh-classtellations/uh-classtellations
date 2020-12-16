@@ -30,11 +30,13 @@ function createUser(email, password, role) {
     Roles.addUsersToRoles(userID, 'admin');
   }
   for (let i = 0; i < defaultProgress.length; i++) {
-    const s = defaultProgress[i][0];
-    const n = defaultProgress[i][1];
+    const sem = defaultProgress[i][0];
+    const num = defaultProgress[i][1];
     let c = 3;
-    if (fourCreds.includes(n)) c = 4;
-    Courses.collection.insert({ semester: s, num: n, credits: c, status: '--', grade: '--', owner: email },
+    let status = 'Upcoming';
+    if (sem < 5) status = 'Completed';
+    if (fourCreds.includes(num)) c = 4;
+    Courses.collection.insert({ semester: sem, num: num, credits: c, status: status, grade: '--', owner: email },
         (error) => {
           if (error) {
             console.log('Course init failed');

@@ -4,48 +4,47 @@ import React from 'react';
 import { Grid } from 'semantic-ui-react';
 import jsPDF from 'jspdf';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import Xarrow from 'react-xarrows';
+import swal from 'sweetalert';
 
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
-
-import Xarrow from 'react-xarrows';
-
-import swal from 'sweetalert';
-
 import { Courses } from '../../api/course/Course';
 
-const grid = 5;
-
+// style for courses
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: 'none',
-  padding: grid * 2,
-  margin: `0 0 ${grid}px 0`,
 
   background: 'rgba(250, 250, 250, 0.7)',
   borderRadius: 3,
   width: 'auto',
-  height: 40,
+  minWidth: 60,
+  height: 'auto',
+  minHeight: 40,
+  margin: '0 0 2px 0',
+  padding: 10,
 
-  // change background colour if dragging
-  // background: isDragging ? 'lightgreen' : 'grey',
+  textAlign: 'center',
+  verticalAlign: 'middle',
 
-  // styles we need to apply on draggables
   ...draggableStyle,
 });
 
+// style for semester columns
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? 'rgba(175, 215, 250, 0.5)' : 'rgba(250, 250, 250, 0.2)',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-evenly',
-  padding: grid,
+  padding: 2,
   width: 'auto',
   minWidth: 40,
   height: 900,
 });
 
+// to reset the semesters array
 const emptySems = (numSems) => {
   const result = new Array(numSems);
   for (let i = 0; i < numSems; i++) {
@@ -54,23 +53,25 @@ const emptySems = (numSems) => {
   return result;
 };
 
+// semester names from indices depending on start year
 const populateSemNames = (firstYear, numSems) => {
   let year = firstYear;
   let isFall = true;
   const result = new Array(numSems);
   for (let i = 0; i < numSems; i++) {
     if (isFall) {
-      result[i] = `${year} Fall`;
+      result[i] = `Fall ${year}`;
       isFall = false;
       year++;
     } else {
-      result[i] = `${year} Spring`;
+      result[i] = `Spring ${year}`;
       isFall = true;
     }
   }
-  console.log(result);
   return result;
 };
+
+const fourCreds = [111, 211, 311];
 
 class Progress extends React.Component {
 
@@ -82,16 +83,17 @@ class Progress extends React.Component {
     this.firstYear = 2018;
 
     this.semNames = populateSemNames(this.firstYear, this.numSems);
-    console.log(this.semNames[5]);
 
     this.userId = Meteor.userId();
 
     this.semesters = emptySems(this.numSems);
 
+    // identify courses using unique key from render function and class function
     this.keyToId = new Map();
 
     this.owner = null;
 
+    // preqs for all courses in standard set
     this.preqs = [
       [111, 211],
       [141, 241],
@@ -125,6 +127,7 @@ class Progress extends React.Component {
 
   keyForSemAndNum = (sem, num) => (`${sem}-${num}`);
 
+  // update the semester and id arrays from the database
   refreshSemsAndIds = () => {
     while (this.semesters.length > 0) this.semesters.pop();
     while (this.keyToId.length > 0) this.ids.pop();
@@ -135,10 +138,11 @@ class Progress extends React.Component {
           this.keyForSemAndNum(course.semester, course.num),
           course._id);
     });
-    console.log(this.semesters);
-    this.semesters.map((sem) => sem.map((num) => console.log(`${this.semesters.indexOf(sem)}, ${num}`)));
+    // console.log(this.semesters);
+    // this.semesters.map((sem) => sem.map((num) => console.log(`${this.semesters.indexOf(sem)}, ${num}`)));
   }
 
+  // the latest semester of the preqs for a course
   maxPreqSem = num => {
     let result = -1;
     this.preqs.map((preq) => {
@@ -155,6 +159,7 @@ class Progress extends React.Component {
     return result;
   }
 
+  // the earliest semester of any course for which the passed course is a preq
   earliestDescendant = num => {
     let result = this.numSems;
     this.preqs.map((preq) => {
@@ -170,6 +175,18 @@ class Progress extends React.Component {
     return result;
   }
 
+  totalCredits = (sem) => {
+    if (this.semesters[sem]) {
+      let result = 0;
+      console.log(this.semesters[5]);
+      this.semesters[sem].map((course) => {
+        if (fourCreds.includes(course)) result += 4;
+        else result += 3;
+      });
+      return result;
+    }
+  };
+
   onDragEnd = (result) => {
     const { source, destination } = result;
 
@@ -177,13 +194,12 @@ class Progress extends React.Component {
     if (!destination) {
 
     } else {
-
       const sDropID = source.droppableId.toString();
+
+      // the
       const sSemPos = sDropID.substring(sDropID.length - 1);
 
       const num = this.semesters[sSemPos][source.index];
-      console.log(num);
-      console.log(sSemPos);
 
       const dDropID = destination.droppableId.toString();
       const dSemPos = dDropID.substring(sDropID.length - 1);
@@ -191,20 +207,19 @@ class Progress extends React.Component {
       // if the latest preq is the desination or later, alert and abort
       if (this.maxPreqSem(num) >= dSemPos
           || this.earliestDescendant(num) <= dSemPos) {
-        swal('Prerequisite Error', 'Prerequisites not met for this timeline');
+        swal('Prerequisite Error', 'Prerequisites are not met in this timeline');
         return;
       }
 
+      // get the ID to update the database
       const theId = this.keyToId.get(this.keyForSemAndNum(sSemPos, num));
-
       Courses.collection.update({ _id: theId }, { $set: { semester: dSemPos } });
     }
-    this.render();
   };
 
   render() {
 
-    // not efficient, but it wouldn't update anywhere else
+    // inefficient, but it wouldn't update elsewhere
     this.props.courses.map((c) => {
       if (this.owner == null) {
         this.owner = c.owner;
@@ -227,7 +242,10 @@ class Progress extends React.Component {
                         {(provided, snapshot) => (
                             <div>
                               <div className='semester-info'>
-                              {this.semNames[this.semesters.indexOf(sem)]}
+                                {this.semNames[this.semesters.indexOf(sem)]}
+                              </div>
+                              <div className='semester-info'>
+                                {`Credits: ${this.totalCredits(this.semesters.indexOf(sem))}`}
                               </div>
                               <Grid.Column className='semester'>
                                 <div ref={provided.innerRef}
@@ -259,6 +277,11 @@ class Progress extends React.Component {
               </Grid.Row>
             </Grid>
           </DragDropContext>
+          <div as='h4' className='semester-info'>
+            <div as='p'>Note: not all courses are available each semester; check STAR if you are unsure</div>
+            <div as='p'> If arrows don't update, you may need to refresh the page</div>
+          </div>
+
         </div>
     );
   }
