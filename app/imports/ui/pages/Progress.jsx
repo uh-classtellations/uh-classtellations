@@ -1,7 +1,7 @@
 // Drag and drop made referencing https://codesandbox.io/s/ql08j35j3q?file=/index.js:2606-2614
 
 import React, { Component, useState } from 'react';
-import { Container } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import Board, { moveCard } from '@lourenci/react-kanban';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -165,13 +165,14 @@ class Progress extends React.Component {
     return (
         <div className='landing-background'>
           <DragDropContext onDragEnd={this.onDragEnd}>
-            <div>{semesters.map((sem) =>
-                <div className='semester'>
+            <Grid>
+              {semesters.map((sem) =>
+                <Grid.Column className='semester'>
                   {sem.map((num) => <div className='prog-course'>
-                    {semesters.indexOf(sem)} for {num}
+                    ICS {num}
                   </div>)}
-                </div>)}
-            </div>
+                </Grid.Column>)}
+            </Grid>
           </DragDropContext>
         </div>
     );
