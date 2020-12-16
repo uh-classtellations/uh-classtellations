@@ -15,7 +15,7 @@ class CoursesCollection {
       num: Number,
       credits: Number,
       status: String,
-      grade: String,
+      // grade: String,
       // prerequisites: [],
       owner: String,
     }, { tracker: Tracker });
