@@ -129,7 +129,6 @@ class Progress extends React.Component {
       [211, 311],
       [241, 311],
       [211, 314],
-      [211, 314],
       [311, 321],
       [311, 332],
       [311, 496],
@@ -167,6 +166,7 @@ class Progress extends React.Component {
           course._id,
       );
     });
+    // reset and recalculate total credits taken and in plan
     this.totalCredits = 0;
     this.finishedCredits = 0;
     for (let i = 0; i < this.numSems; i++) {
@@ -176,7 +176,6 @@ class Progress extends React.Component {
         this.finishedCredits += semCredits;
       }
     }
-    // console.log(this.semesters);
     // this.semesters.map((sem) => sem.map((num) => console.log(`${this.semesters.indexOf(sem)}, ${num}`)));
   }
 
@@ -213,6 +212,7 @@ class Progress extends React.Component {
     return result;
   }
 
+  // the total credits taken / planned for in a semester
   semCredits = (sem) => {
     let result = 0;
     try {
