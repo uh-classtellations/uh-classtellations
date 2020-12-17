@@ -35,7 +35,7 @@ function createUser(email, password, role) {
     let c = 3;
     // Default semester for completion: Fall 2020
     let status = 'Upcoming';
-    if (sem < 5) status = 'Completed';
+    if (sem < 4) status = 'Completed';
     if (fourCreds.includes(num)) c = 4;
     Courses.collection.insert({ semester: sem, num: num, credits: c, status: status, grade: '--', owner: email },
         (error) => {

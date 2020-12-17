@@ -9,12 +9,12 @@ import { Courses } from '../../api/course/Course';
 
 /** Create a schema to specify the structure of the data to appear in the form. */
 const formSchema = new SimpleSchema({
-  semester: {
+  semestersAfterStarting: {
     type: Number,
     allowedValues: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     defaultValue: 7,
   },
-  num: {
+  icsCourseNum: {
     type: Number,
   },
   credits: {
@@ -44,9 +44,9 @@ class AddCourse extends React.Component {
 
   /** On submit, insert the data. */
   submit(data, formRef) {
-    const { semester, num, credits, status, grade } = data;
+    const { semestersAfterStarting, icsCourseNum, credits, status, grade } = data;
     const owner = Meteor.user().username;
-    Courses.collection.insert({ semester, num, credits, status, grade, owner },
+    Courses.collection.insert({ semester: semestersAfterStarting, num: icsCourseNum, credits: credits, status: status, grade: grade, owner: owner },
         (error) => {
           if (error) {
             swal('Error', error.message, 'error');
@@ -73,8 +73,8 @@ class AddCourse extends React.Component {
               fRef = ref;
             }} schema={bridge} onSubmit={data => this.submit(data, fRef)}>
               <Segment>
-                <SelectField id='semester' name='semester'/>
-                <NumField id='num' name='num'/>
+                <SelectField id='semestersAfterStarting' name='semestersAfterStarting'/>
+                <NumField id='icsCourseNum' name='icsCourseNum'/>
                 <SelectField id='credits' name='credits'/>
                 <SelectField id='status' name='status'/>
                 {/* <SelectField id='grade' name='grade'/> */}
