@@ -25,9 +25,9 @@ class CourseItem extends React.Component {
   semNames = populateSemNames(2018, 9);
 
   progressColors(status) {
-    if (status === 'Complete') {
+    if (status === 'Completed') {
       return 'positive';
-    } return status === 'In Progress' ? 'warning' : 'negative';
+    } return status === 'Upcoming' ? 'warning' : 'negative';
   }
 
   removeItem(docID) {
@@ -42,7 +42,7 @@ class CourseItem extends React.Component {
           <Table.Cell>{`ICS ${this.props.course.num}`}</Table.Cell>
           <Table.Cell>{this.props.course.credits}</Table.Cell>
           <Table.Cell>{this.props.course.status}</Table.Cell>
-          <Table.Cell>{this.props.course.grade}</Table.Cell>
+          {/* <Table.Cell>{this.props.course.grade}</Table.Cell> */}
           <Table.Cell>
             <Button icon onClick={() => this.removeItem(this.props.course._id)}>
               <Icon name='trash'/>
