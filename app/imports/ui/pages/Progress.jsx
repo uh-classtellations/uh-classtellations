@@ -87,7 +87,8 @@ class Progress extends React.Component {
 
     html2canvas(input, { scale: '1' }).then((canvas) => {
       const imgData = canvas.toDataURL('image/jpeg');
-      const pdfDOC = new jsPDF("l", "mm", "a0"); //  use a4 for smaller page
+      // eslint-disable-next-line new-cap
+      const pdfDOC = new jsPDF('l', 'mm', 'a0'); //  use a4 for smaller page
 
       const width = pdfDOC.internal.pageSize.getWidth();
       let height = pdfDOC.internal.pageSize.getHeight();
@@ -155,11 +156,12 @@ class Progress extends React.Component {
     while (this.semesters.length > 0) this.semesters.pop();
     while (this.keyToId.length > 0) this.ids.pop();
     this.semesters = emptySems(this.numSems);
-    this.props.courses.map((course) => {
+    this.props.courses.forEach((course) => {
       this.semesters[course.semester].push(course.num);
       this.keyToId.set(
           this.keyForSemAndNum(course.semester, course.num),
-          course._id);
+          course._id,
+      );
     });
     // console.log(this.semesters);
     // this.semesters.map((sem) => sem.map((num) => console.log(`${this.semesters.indexOf(sem)}, ${num}`)));
@@ -168,10 +170,10 @@ class Progress extends React.Component {
   // the latest semester of the preqs for a course
   maxPreqSem = num => {
     let result = -1;
-    this.preqs.map((preq) => {
+    this.preqs.forEach((preq) => {
       if (preq[1] === num) {
         // find the semester of the preq
-        this.semesters.map((sem) => {
+        this.semesters.forEach((sem) => {
           if (sem.includes(preq[0])
               && this.semesters.indexOf(sem) > result) {
             result = this.semesters.indexOf(sem);
@@ -185,9 +187,9 @@ class Progress extends React.Component {
   // the earliest semester of any course for which the passed course is a preq
   earliestDescendant = num => {
     let result = this.numSems;
-    this.preqs.map((preq) => {
+    this.preqs.forEach((preq) => {
       if (preq[0] === num) {
-        this.semesters.map((sem) => {
+        this.semesters.forEach((sem) => {
           if (sem.includes(preq[1])
               && this.semesters.indexOf(sem) < result) {
             result = this.semesters.indexOf(sem);
@@ -199,31 +201,32 @@ class Progress extends React.Component {
   }
 
   totalCredits = (sem) => {
-    if (this.semesters[sem]) {
-      let result = 0;
-      console.log(this.semesters[5]);
-      this.semesters[sem].map((course) => {
+    let result = 0;
+    try {
+      this.semesters[sem].forEach((course) => {
         if (fourCreds.includes(course)) result += 4;
         else result += 3;
       });
-      return result;
+    } catch (error) {
+      console.log(error);
     }
+    return result;
   };
 
   onDragEnd = (result) => {
     const { source, destination } = result;
 
-    // dropped outside the list
-    if (!destination) {
-
-    } else {
+    // make sure course was dropped inside a list
+    if (destination) {
       const sDropID = source.droppableId.toString();
 
-      // the
+      // semester of the source
       const sSemPos = sDropID.substring(sDropID.length - 1);
 
+      // course num
       const num = this.semesters[sSemPos][source.index];
 
+      // semester of the destination by ID
       const dDropID = destination.droppableId.toString();
       const dSemPos = dDropID.substring(sDropID.length - 1);
 
@@ -243,7 +246,7 @@ class Progress extends React.Component {
   render() {
 
     // inefficient, but it wouldn't update elsewhere
-    this.props.courses.map((c) => {
+    this.props.courses.forEach((c) => {
       if (this.owner == null) {
         this.owner = c.owner;
       }
@@ -253,83 +256,71 @@ class Progress extends React.Component {
 
     return (
         <div className='landing-background'>
-          {this.preqs.map((preq) =>
-              <Xarrow start={`drag-${preq[0]}`}
-                      end={`drag-${preq[1]}`}/>)}
+          {this.preqs.map((preq) => <Xarrow start={`drag-${preq[0]}`}
+                                            end={`drag-${preq[1]}`}
+                                            key={`arrow-${preq[0]}-${preq[1]}`}/>)}
           <DragDropContext onDragEnd={this.onDragEnd}>
             <Grid id='progress-view' columns={this.numSems} divided>
               <Grid.Row>
-                {this.semesters.map((sem) =>
-                    <div>
-                      <Droppable droppableId={`drop${this.semesters.indexOf(sem)}`}>
-                        {(provided, snapshot) => (
-                            <div>
-                              <div className='semester-info'>
-                                {this.semNames[this.semesters.indexOf(sem)]}
-                              </div>
-                              <div className='semester-info'>
-                                {`Credits: ${this.totalCredits(this.semesters.indexOf(sem))}`}
-                              </div>
-                              <Grid.Column className='semester'>
-                                <div ref={provided.innerRef}
-                                     style={getListStyle(snapshot.isDraggingOver)}>
-                                  {sem.map((num, index) =>
-                                      <Draggable
-                                          key={`${this.semesters.indexOf(sem)}-${num}`}
-                                          draggableId={`drag-${num}`}
-                                          index={index}>
-                                        {(provided, snapshot) => (
-                                            <div id={`drag-${num}`}
-                                                 ref={provided.innerRef}
-                                                 {...provided.draggableProps}
-                                                 {...provided.dragHandleProps}
-                                                 style={getItemStyle(
-                                                     snapshot.isDragging,
-                                                     provided.draggableProps.style,
-                                                 )}>
-                                              ICS {num}
-                                            </div>
-                                        )}
-                                      </Draggable>)}
-                                  {provided.placeholder}
-                                </div>
-                              </Grid.Column>
-                            </div>)}
-                      </Droppable>
-                    </div>)}
+                {this.semesters.map((sem) => <div key={`sem-div-${this.semesters.indexOf(sem)}`}>
+                  <Droppable droppableId={`drop-${this.semesters.indexOf(sem)}`}>
+                    {(provided, snapshot) => (
+                        <div>
+                          <div className='semester-info'>
+                            {this.semNames[this.semesters.indexOf(sem)]}
+                          </div>
+                          <div className='semester-info'>
+                            {`Credits: ${this.totalCredits(this.semesters.indexOf(sem))}`}
+                          </div>
+                          <Grid.Column className='semester'>
+                            <div ref={provided.innerRef}
+                                 style={getListStyle(snapshot.isDraggingOver)}>
+                              {sem.map((num, index) => <Draggable key={`${this.semesters.indexOf(sem)}-${num}`}
+                                                                  draggableId={`drag-${num}`}
+                                                                  index={index}>
+                                {(providedInner, snapshotInner) => (
+                                    <div id={`drag-${num}`}
+                                         ref={providedInner.innerRef}
+                                         {...providedInner.draggableProps}
+                                         {...providedInner.dragHandleProps}
+                                         style={getItemStyle(
+                                             snapshotInner.isDragging,
+                                             providedInner.draggableProps.style,
+                                         )}>
+                                      ICS {num}
+                                    </div>
+                                )}
+                              </Draggable>)}
+                              {provided.placeholder}
+                            </div>
+                          </Grid.Column>
+                        </div>)}
+                  </Droppable>
+                </div>)}
               </Grid.Row>
             </Grid>
           </DragDropContext>
           <div as='h4' className='semester-info'>
             <div as='p'>Note: not all courses are available each semester; check STAR if you are unsure</div>
-            <div as='p'> If arrows don't update, you may need to refresh the page</div>
+            <div as='p'> If arrows don&#39;t update, you may need to refresh the page</div>
           </div>
-
         </div>
     );
   }
 
 }
 
-Progress
-    .propTypes = {
+Progress.propTypes = {
   courses: PropTypes.array.isRequired,
   Courses: PropTypes.object.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
-export default withTracker(
-    () => {
-      const
-          s1 = Meteor.subscribe(Courses.userPublicationName);
-      return {
-        courses: Courses.collection.find
-        ({}
-        ).fetch(),
-        ready
-    :
-      s1.ready(),
-    }
-      ;
-    })
-(Progress);
+export default withTracker(() => {
+  const
+      s1 = Meteor.subscribe(Courses.userPublicationName);
+  return {
+    courses: Courses.collection.find({}).fetch(),
+    ready: s1.ready(),
+  };
+})(Progress);
