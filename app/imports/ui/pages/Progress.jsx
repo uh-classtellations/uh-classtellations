@@ -1,23 +1,23 @@
-// Drag and drop made referencing https://codesandbox.io/s/ql08j35j3q?file=/index.js:2606-2614
-
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas-render-offscreen';
+
+// Drag and drop made referencing https://codesandbox.io/s/ql08j35j3q?file=/index.js:2606-2614
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
 import Xarrow from 'react-xarrows';
 import swal from 'sweetalert';
 
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
+
 import { withTracker } from 'meteor/react-meteor-data';
 import { Courses } from '../../api/course/Course';
 
 // style for courses
 const getItemStyle = (isDragging, draggableStyle) => ({
-  // some basic styles to make the items look a bit nicer
   userSelect: 'none',
-
   background: 'rgba(250, 250, 250, 0.7)',
   borderRadius: 3,
   width: 'auto',
