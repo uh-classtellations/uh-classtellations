@@ -1,6 +1,6 @@
 .landing-background {
     height: 100%;
-    min-height: 900px;
+    min-height: 700px;
     background: url('images/stargazer.jpg') no-repeat center center fixed;
     background-size: cover;
     padding: 20px 20px 20px 20px;
@@ -26,6 +26,16 @@
     cursor: pointer;
 }
 
+/*.grid {*/
+/*    background: red;*/
+/*}*/
+
+/*.dragga*/
+
+/*.grid .column {*/
+/*    background: green;*/
+/*}*/
+
 .mb5 {
     margin: 20px;
 }
@@ -41,8 +51,6 @@
     border-radius: 3px;
     width: 80px;
     height: 40px;
-    margin: 10px;
-    padding: 5px;
 }
 
 .progress-view {
@@ -58,7 +66,6 @@
     border: 1px solid #999;
     border-radius: 3px;
     margin: 10px;
-    padding: 5px;
     justify-content: center;
     aligntItems: center;
     visibility: visible;
@@ -67,7 +74,7 @@
 
 .progress-view {
     width: 1000px !important;
-    height: 900px !important;
+    height: 700px !important;
     visibility: hidden;
 }
 
@@ -78,7 +85,11 @@
 }
 
 .semester-info {
-    width: auto;
+    width: 100%;
     text-align: center;
     background: rgba(250, 250, 250, 0.7);
+}
+
+.progress-header {
+    display: inline-block;
 }
