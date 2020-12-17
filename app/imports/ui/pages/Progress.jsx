@@ -79,7 +79,7 @@ class Progress extends React.Component {
     // eslint-disable-next-line no-undef
     // alert('Now downloading progress image.  This may take a few seconds.');
     // eslint-disable-next-line no-undef
-    const input = document.getElementById('divToPrint');
+    const input = document.getElementById('div-to-print');
     const divHeight = input.clientHeight;
     const divWidth = input.clientWidth;
     const ratio = divHeight / divWidth;
@@ -283,7 +283,7 @@ class Progress extends React.Component {
                                               end={`drag-${preq[1]}`}
                                               key={`arrow-${preq[0]}-${preq[1]}`}/>)}
             <DragDropContext onDragEnd={this.onDragEnd}>
-              <Grid id='progress-view' columns={this.numSems} divided>
+              <Grid id='progress-view' divided>
                 <Grid.Row>
                   {this.semesters.map((sem) => <div key={`sem-div-${this.semesters.indexOf(sem)}`}>
                     <Droppable droppableId={`drop-${this.semesters.indexOf(sem)}`}>

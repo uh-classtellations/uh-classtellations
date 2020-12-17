@@ -79,8 +79,6 @@
 }
 
 .divToPrint {
-    width: 1000px !important;
-    height: 900px !important;
     visibility: visible;
 }
 
