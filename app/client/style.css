@@ -2,23 +2,24 @@
     height: 100%;
     min-height: 900px;
     background: url('images/stargazer.jpg') no-repeat center center fixed;
-    background-size:cover;
+    background-size: cover;
     padding: 20px 20px 20px 20px;
 }
 
 .external-link {
     color: lawngreen;
 }
+
 .external-link:hover {
     color: orange;
 }
 
 #transcript-table {
- margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .add-padding {
-  padding: 25px
+    padding: 25px
 }
 
 .list-group-item {
@@ -26,7 +27,7 @@
 }
 
 .mb5 {
-  margin: 20px;
+    margin: 20px;
 }
 
 /*#div-to-print {*/
@@ -61,13 +62,19 @@
     justify-content: center;
     aligntItems: center;
     visibility: visible;
-    width: 1000px !important; height: 900px !important; visibility: visible;
+    /*width: 1000px !important; height: 900px !important; visibility: visible;*/
 }
 
-.progress-view { width: 1000px !important; height: 900px !important; visibility: hidden;}
+.progress-view {
+    width: 1000px !important;
+    height: 900px !important;
+    visibility: hidden;
+}
 
 .divToPrint {
-    width: 1000px !important; height: 900px !important; visibility: visible;
+    width: 1000px !important;
+    height: 900px !important;
+    visibility: visible;
 }
 
 .semester-info {

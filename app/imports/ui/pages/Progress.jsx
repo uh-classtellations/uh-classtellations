@@ -76,7 +76,7 @@ const fourCreds = [111, 211, 311];
 
 class Progress extends React.Component {
 
-  printDocument() {
+  printDocument = () => {
     // eslint-disable-next-line no-undef
     // alert('Now downloading progress image.  This may take a few seconds.');
     // eslint-disable-next-line no-undef
@@ -95,6 +95,9 @@ class Progress extends React.Component {
 
       pdfDOC.addImage(imgData, 'JPEG', 0, 0, width - 20, height - 10);
       pdfDOC.save('summary.pdf');
+    });
+  };
+
   constructor() {
     super();
 
@@ -138,7 +141,7 @@ class Progress extends React.Component {
       [311, 312],
       [314, 312],
       [311, 414],
-      [314, 4141],
+      [314, 414],
       [311, 422],
       [311, 461],
       [314, 427],
@@ -308,16 +311,25 @@ class Progress extends React.Component {
 
 }
 
-Progress.propTypes = {
+Progress
+    .propTypes = {
   courses: PropTypes.array.isRequired,
   Courses: PropTypes.object.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
-export default withTracker(() => {
-  const s1 = Meteor.subscribe(Courses.userPublicationName);
-  return {
-    courses: Courses.collection.find({}).fetch(),
-    ready: s1.ready(),
-  };
-})(Progress);
+export default withTracker(
+    () => {
+      const
+          s1 = Meteor.subscribe(Courses.userPublicationName);
+      return {
+        courses: Courses.collection.find
+        ({}
+        ).fetch(),
+        ready
+    :
+      s1.ready(),
+    }
+      ;
+    })
+(Progress);
